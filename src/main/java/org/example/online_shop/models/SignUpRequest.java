@@ -1,22 +1,16 @@
-package org.example.online_shop.dto;
+package org.example.online_shop.models;
 
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
-    private Long userId;
+public class SignUpRequest {
     private String name;
     private String username;
     private String email;
     private String password;
     private String phone;
-    private String address;
-    private int roleId;
 }
-

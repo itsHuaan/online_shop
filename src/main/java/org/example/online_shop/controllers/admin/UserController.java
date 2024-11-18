@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @Operation(summary = "Get Users", description = "Get Users", tags = {"01. User"})
+    @Operation(summary = "Get Users", tags = {"01. User"})
     @GetMapping("/get-user")
     public ResponseEntity<?> getUsers() {
         List<UserDto> result = userService.findAll();
@@ -34,7 +34,7 @@ public class UserController {
                 : new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-    @Operation(summary = "Create New User", description = "Create New User", tags = {"01. User"})
+    @Operation(summary = "Create New User", tags = {"01. User"})
     @PostMapping("create-user")
     public ResponseEntity<?> createUser(@RequestBody UserModel user) {
         boolean isExisting = userService.findByEmailOrUsername(user.getEmail(), user.getUsername()) != null;

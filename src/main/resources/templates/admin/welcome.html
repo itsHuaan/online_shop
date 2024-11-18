@@ -84,7 +84,7 @@
             border-color: #FFFFFF;
         }
 
-        button:hover{
+        button:hover {
             background-color: #14319b;
         }
 
@@ -226,6 +226,38 @@
         .toggle-password:hover {
             color: #435ebe;
         }
+
+        @media (max-width: 768px) {
+            .overlay-container {
+                display: none;
+            }
+
+            .form-container {
+                width: 100%;
+                position: static;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+            }
+
+            .container {
+                width: 100%;
+                min-height: 100vh;
+                box-shadow: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            body {
+                margin: 0;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
     </style>
 </head>
 
@@ -259,17 +291,17 @@
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#togglePassword').on('click', function () {
             const passwordInput = $('#passwordInput');
             const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
             passwordInput.attr('type', type);
-
             $(this).toggleClass('fa-eye fa-eye-slash');
         });
     });
 </script>
 </body>
+
 </html>

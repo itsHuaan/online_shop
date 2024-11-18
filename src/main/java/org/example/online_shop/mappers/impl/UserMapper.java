@@ -1,6 +1,7 @@
 package org.example.online_shop.mappers.impl;
 
 import org.example.online_shop.dto.UserDto;
+import org.example.online_shop.entities.RoleEntity;
 import org.example.online_shop.entities.UserEntity;
 import org.example.online_shop.mappers.IBaseMapper;
 import org.example.online_shop.models.UserModel;
@@ -25,11 +26,14 @@ public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
                 .email(entity.getEmail())
                 .name(entity.getName())
                 .phone(entity.getPhone())
+                .roleId(entity.getRole().getRoleId())
                 .build();
     }
 
     @Override
     public UserEntity toEntity(UserModel model) {
+        RoleEntity role = new RoleEntity();
+        role.setRoleId(model.getRoleId());
         return UserEntity.builder()
                 .userId(model.getId())
                 .name(model.getName())
@@ -38,6 +42,9 @@ public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
                 .password(passwordEncoder.encode(model.getPassword()))
                 .address(model.getAddress())
                 .phone(model.getPhone())
+                .role(role)
+                .createdDate(model.getCreatedDate())
+                .profilePicture(model.getProfilePicture())
                 .build();
     }
 }

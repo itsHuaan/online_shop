@@ -19,6 +19,7 @@ public class UserModel {
     private String address;
     private int roleId = 2;
     private Boolean status = true;
+    private String profilePicture;
     private LocalDateTime createdDate = LocalDateTime.now();
 }
 
