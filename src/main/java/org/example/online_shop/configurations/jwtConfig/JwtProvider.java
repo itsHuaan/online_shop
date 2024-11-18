@@ -30,7 +30,7 @@ public class JwtProvider {
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
         UserDto userDto = userService.findByUsername(Username);
         return Jwts.builder()
-                .setSubject(Long.toString(userDto.getId()))
+                .setSubject(Long.toString(userDto.getUserId()))
                 .claim("username", userDto.getUsername())
                 .claim("role", userDto.getRoleId())
                 .setExpiration(expiryDate)

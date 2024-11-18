@@ -1,6 +1,7 @@
 package org.example.online_shop.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,12 +19,22 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @NotNull
     private String name;
+
+    @NotNull
     private String username;
+
+    @NotNull
     private String email;
+
+    @NotNull
     private String password;
+
+    @NotNull
     private String phone;
     private String address;
+    private String profilePicture;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

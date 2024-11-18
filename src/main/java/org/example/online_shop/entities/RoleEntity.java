@@ -13,6 +13,6 @@ import lombok.*;
 public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long roleId;
+    private int roleId;
     private String roleName;
 }
