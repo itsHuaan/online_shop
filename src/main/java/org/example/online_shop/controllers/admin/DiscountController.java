@@ -52,4 +52,16 @@ public class DiscountController {
                 ? new ResponseEntity<>("Discount deleted", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to delete discount", HttpStatus.NO_CONTENT);
     }
+
+    @Operation(summary = "Update Discount", tags = {"04. Discount"})
+    @PutMapping("/update-discount")
+    public ResponseEntity<?> updateDiscount(@RequestParam Long discountId, @RequestBody DiscountModel discount) {
+        if (discountService.findById(discountId) == null) {
+            return new ResponseEntity<>("Discount not found", HttpStatus.NOT_FOUND);
+        }
+        discount.setDiscountId(discountId);
+        return discountService.save(discount) == 2
+                ? new ResponseEntity<>("Discount updated", HttpStatus.OK)
+                : new ResponseEntity<>("Failed to update discount", HttpStatus.BAD_REQUEST);
+    }
 }
