@@ -10,14 +10,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class CategoryModel {
+    private Long categoryId;
     private String name;
     private String description;
     private Boolean status = true;
-    private LocalDateTime createdDate;
-
-    public CategoryModel(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

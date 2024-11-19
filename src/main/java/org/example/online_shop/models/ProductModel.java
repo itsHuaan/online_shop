@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ProductModel {
+    private Long productId;
     private String name;
     private String description;
     private double importPrice;
@@ -23,6 +24,6 @@ public class ProductModel {
     private Long authorId;
     private Long discountId;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

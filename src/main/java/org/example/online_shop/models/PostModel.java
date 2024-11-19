@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class PostModel {
+    private Long postId;
     private String title;
     private String content;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

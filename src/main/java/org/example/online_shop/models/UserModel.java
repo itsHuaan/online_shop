@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class UserModel {
-    private Long id;
+    private Long userId;
     private String name;
     private String username;
     private String email;

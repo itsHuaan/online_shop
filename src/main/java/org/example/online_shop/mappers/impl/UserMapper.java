@@ -10,12 +10,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
-    private final PasswordEncoder passwordEncoder;
-
-    public UserMapper(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
     @Override
     public UserDto toDTO(UserEntity entity) {
         return UserDto.builder()
@@ -35,11 +29,11 @@ public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
         RoleEntity role = new RoleEntity();
         role.setRoleId(model.getRoleId());
         return UserEntity.builder()
-                .userId(model.getId())
+                .userId(model.getUserId())
                 .name(model.getName())
                 .username(model.getUsername())
                 .email(model.getEmail())
-                .password(passwordEncoder.encode(model.getPassword()))
+                .password(model.getPassword())
                 .address(model.getAddress())
                 .phone(model.getPhone())
                 .role(role)

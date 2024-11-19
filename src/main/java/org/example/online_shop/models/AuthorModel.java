@@ -14,6 +14,6 @@ import java.util.List;
 public class AuthorModel {
     private String name;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

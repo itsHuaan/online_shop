@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ReviewModel {
-    private Long userId;
+    private Long reviewId;
     private Long productId;
     private Integer rating;
     private String comment;
     private String response;
     private String image;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

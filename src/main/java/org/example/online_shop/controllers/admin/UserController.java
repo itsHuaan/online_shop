@@ -42,7 +42,11 @@ public class UserController {
         if (isExisting) {
             return new ResponseEntity<>("Email or Username has been taken by another user", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("User created", HttpStatus.CREATED);
+        int result = userService.save(user);
+        if (result == 1){
+            return new ResponseEntity<>("User created", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("User creation failed", HttpStatus.CONFLICT);
     }
 
     @Operation(summary = "Delete Users", tags = {"01. User"})
@@ -63,9 +67,9 @@ public class UserController {
         if (oldUser == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_MODIFIED);
         }
-        UserModel newUser = userService.mapNonNullFields(oldUser, user);
-        return userService.save(newUser) == 1
-                ? new ResponseEntity<>(newUser, HttpStatus.OK)
+        user.setUserId(id);
+        return userService.save(user) == 2
+                ? new ResponseEntity<>("User updated", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to update user", HttpStatus.BAD_REQUEST);
     }
 }

@@ -13,11 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PaymentMethodModel {
+    private Long paymentMethodId;
     private String type;
     private String provider;
     private String accountNumber;
     private LocalDate expiryDate;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 
