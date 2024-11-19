@@ -46,7 +46,7 @@ public class UserService implements IUserService, UserDetailsService {
         UserEntity currentUser = model.getUserId() != null
                 ? userRepository.findById(model.getUserId()).orElse(null)
                 : null;
-        if (currentUser != null) {
+        if (currentUser != null && currentUser.getPassword() == null) {
             userRepository.save(mapNonNullFieldsToEntity(model, currentUser));
             return 2;
         } else {
@@ -87,11 +87,11 @@ public class UserService implements IUserService, UserDetailsService {
             try {
                 Field dtoField = userEntity.getClass().getDeclaredField(userField.getName());
                 userField.setAccessible(true);
-                Object userValue = userField.get(userModel);
+                Object value = userField.get(userModel);
 
-                if (userValue != null) {
+                if (value != null) {
                     dtoField.setAccessible(true);
-                    dtoField.set(userEntity, userValue);
+                    dtoField.set(userEntity, value);
                 }
             } catch (NoSuchFieldException e) {
                 System.out.println("Field missing in ProfileDto: " + userField.getName());

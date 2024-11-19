@@ -23,6 +23,7 @@ public class ProductEntity {
     private double importPrice;
     private double salePrice;
     private Integer stock;
+    private Integer sold;
     private Integer totalPage;
     private Integer publishDate;
     private String imageUrl;
