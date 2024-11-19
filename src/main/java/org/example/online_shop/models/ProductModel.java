@@ -24,6 +24,7 @@ public class ProductModel {
     private Long categoryId;
     private Long authorId;
     private Long discountId;
+    private String imageUrl;
     private Boolean status = true;
     private LocalDateTime createdDate = LocalDateTime.now();
 }
