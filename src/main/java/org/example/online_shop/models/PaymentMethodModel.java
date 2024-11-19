@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PaymentMethodModel {
+    private Long paymentMethodId;
     private String type;
     private String provider;
     private String accountNumber;

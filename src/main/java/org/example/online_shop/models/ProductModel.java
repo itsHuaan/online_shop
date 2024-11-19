@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ProductModel {
+    private Long productId;
     private String name;
     private String description;
     private double importPrice;

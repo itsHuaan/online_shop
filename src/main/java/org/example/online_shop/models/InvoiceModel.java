@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class InvoiceModel {
+    private Long invoiceId;
     private Long user_id;
     private String deliveryAddress;
     private double totalAmount;
