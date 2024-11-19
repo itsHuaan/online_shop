@@ -8,6 +8,7 @@ import org.example.online_shop.repositories.ICategoryRepository;
 import org.example.online_shop.services.ICategoryService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +33,21 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public CategoryDto save(CategoryModel categoryModel) {
-        Optional<CategoryEntity> category = categoryRepository.findByName(categoryModel.getName());
-        if (category.isPresent() && !category.isPresent()){
-            categoryRepository.save(categoryMapper.toEntity(categoryModel));
+    public int save(CategoryModel categoryModel) {
+        try{
+            Optional<CategoryEntity> category = categoryRepository.findByName(categoryModel.getName());
+            if (category.isEmpty() && !category.isPresent()){
+                categoryModel.setCreatedDate(LocalDateTime.now());
+                categoryModel.setStatus(true);
+                categoryRepository.save(categoryMapper.toEntity(categoryModel));
+                return 1;
+            } else {
+                return 2;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return 0;
         }
-        return null;
     }
 
     @Override
@@ -46,4 +56,8 @@ public class CategoryService implements ICategoryService {
     }
 
 
+    @Override
+    public int update(CategoryModel categoryModel) {
+        return 0;
+    }
 }
