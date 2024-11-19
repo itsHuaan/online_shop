@@ -2,10 +2,8 @@ package org.example.online_shop.services.impl;
 
 import org.example.online_shop.dto.DiscountDto;
 import org.example.online_shop.entities.DiscountEntity;
-import org.example.online_shop.entities.UserEntity;
 import org.example.online_shop.mappers.impl.DiscountMapper;
 import org.example.online_shop.models.DiscountModel;
-import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IDiscountRepository;
 import org.example.online_shop.services.IDiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,16 @@ public class DiscountService implements IDiscountService {
 
     @Override
     public int save(DiscountModel discountModel) {
-        return 0;
+        DiscountEntity currentDiscount = discountModel.getDiscountId() != null
+                ? discountRepository.findById(discountModel.getDiscountId()).orElse(null)
+                : null;
+        if (currentDiscount != null) {
+            discountRepository.save(mapNonNullFieldsToEntity(discountModel, currentDiscount));
+            return 2;
+        } else {
+            discountRepository.save(discountMapper.toEntity(discountModel));
+            return 1;
+        }
     }
 
     @Override
