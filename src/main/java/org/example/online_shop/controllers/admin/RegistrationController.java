@@ -47,9 +47,8 @@ public class RegistrationController {
     public ResponseEntity<?> createOtp(@RequestParam String email) {
         OtpModel otp = new OtpModel();
         otp.setEmail(email);
-        OtpDto otpDto = otpService.save(otp);
-        return otpDto != null
-                ? new ResponseEntity<>(otpDto, HttpStatus.CREATED)
-                : new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        return otpService.save(otp) == 1
+                ? new ResponseEntity<>("OTP Generated", HttpStatus.CREATED)
+                : new ResponseEntity<>("Failed To Generate OTP", HttpStatus.BAD_REQUEST);
     }
 }
