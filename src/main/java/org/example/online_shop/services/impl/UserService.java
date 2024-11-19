@@ -43,8 +43,8 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public int save(UserModel model) {
-        UserEntity currentUser = model.getId() != null
-                ? userRepository.findById(model.getId()).orElse(null)
+        UserEntity currentUser = model.getUserId() != null
+                ? userRepository.findById(model.getUserId()).orElse(null)
                 : null;
         if (currentUser != null) {
             userRepository.save(mapNonNullFieldsToEntity(model, currentUser));

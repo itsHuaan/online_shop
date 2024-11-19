@@ -29,7 +29,7 @@ public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
         RoleEntity role = new RoleEntity();
         role.setRoleId(model.getRoleId());
         return UserEntity.builder()
-                .userId(model.getId())
+                .userId(model.getUserId())
                 .name(model.getName())
                 .username(model.getUsername())
                 .email(model.getEmail())

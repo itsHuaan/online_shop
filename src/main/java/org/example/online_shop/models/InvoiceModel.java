@@ -19,6 +19,6 @@ public class InvoiceModel {
     private String note;
     private Integer deliveryStatus;
     private Long paymentMethodId;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

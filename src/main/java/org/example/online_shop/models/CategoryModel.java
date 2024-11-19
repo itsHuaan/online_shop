@@ -1,10 +1,8 @@
 package org.example.online_shop.models;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -12,9 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CategoryModel {
+    private Long categoryId;
     private String name;
     private String description;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

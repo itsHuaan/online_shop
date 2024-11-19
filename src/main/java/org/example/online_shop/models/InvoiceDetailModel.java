@@ -16,6 +16,6 @@ public class InvoiceDetailModel {
     private double price;
     private Integer quantity;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

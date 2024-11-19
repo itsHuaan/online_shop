@@ -46,6 +46,7 @@ public class UserController {
         if (result == 1){
             return new ResponseEntity<>("User created", HttpStatus.CREATED);
         }
+        return new ResponseEntity<>("User creation failed", HttpStatus.CONFLICT);
     }
 
     @Operation(summary = "Delete Users", tags = {"01. User"})
@@ -66,7 +67,7 @@ public class UserController {
         if (oldUser == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_MODIFIED);
         }
-        user.setId(id);
+        user.setUserId(id);
         return userService.save(user) == 2
                 ? new ResponseEntity<>("User updated", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to update user", HttpStatus.BAD_REQUEST);

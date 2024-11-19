@@ -19,6 +19,6 @@ public class PaymentMethodModel {
     private String accountNumber;
     private LocalDate expiryDate;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

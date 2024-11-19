@@ -17,6 +17,6 @@ public class DiscountModel {
     private double discountPercentage;
     private LocalDate expiryDate;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

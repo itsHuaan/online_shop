@@ -24,6 +24,6 @@ public class ProductModel {
     private Long authorId;
     private Long discountId;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

@@ -18,6 +18,6 @@ public class ReviewModel {
     private String response;
     private String image;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

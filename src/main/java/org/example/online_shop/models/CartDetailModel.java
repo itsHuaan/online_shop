@@ -14,6 +14,6 @@ public class CartDetailModel {
     private ProductModel product;
     private Integer quantity;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 
