@@ -52,12 +52,29 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public int delete(Long id) {
-        return 0;
+        try{
+            Optional<CategoryEntity> category = categoryRepository.findById(id);
+            if (!category.isEmpty()){
+                categoryRepository.delete(category.get());
+                return 1;
+            }else {
+                return 0;
+            }
+        }catch (Exception e){
+            return 0;
+        }
     }
 
 
     @Override
-    public int update(CategoryModel categoryModel) {
-        return 0;
+    public int update(CategoryModel categoryModel, Long id) {
+        try{
+            CategoryEntity category = categoryMapper.toEntity(categoryModel);
+            category.setCategoryId(id);
+            categoryRepository.save(category);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
     }
 }

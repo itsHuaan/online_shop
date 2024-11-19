@@ -6,13 +6,11 @@ import org.example.online_shop.models.CategoryModel;
 import org.example.online_shop.services.ICategoryService;
 import org.example.online_shop.utils.Const;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @Tag(name = "03. Category")
 @RestController
-@RequestMapping(value = Const.API_PREFIX + "/user")
+@RequestMapping(value = Const.API_PREFIX + "/category")
 public class CategoryController {
 
     private final ICategoryService iCategoryService;
@@ -39,9 +37,28 @@ public class CategoryController {
 
     @Operation(summary = "Update Category", tags = {"03. Category"})
     @PostMapping("/update-category")
-    public ResponseEntity<?> updateCategory(@RequestBody CategoryModel categoryModel){
+    public ResponseEntity<?> updateCategory(@RequestBody CategoryModel categoryModel, @RequestParam("id") Long id){
+        int result = iCategoryService.update(categoryModel, id);
+        String noti = "";
+        if (result == 1){
+            noti = "Sửa  thành công";
+        }else {
+            noti = "Sửa thất bại";
+        }
+        return ResponseEntity.ok(noti);
+    }
 
-        return ResponseEntity.ok(0);
+    @Operation(summary = "Delete Category", tags = {"03. Category"})
+    @GetMapping("/delete-category")
+    public ResponseEntity<?> deleteCategory(@RequestParam("id") long id){
+        int result = iCategoryService.delete(id);
+        String noti = "";
+        if (result == 1){
+            noti = " Xóa thành công";
+        }else {
+            noti = "Xóa thất bại";
+        }
+        return ResponseEntity.ok(noti);
     }
 
 }
