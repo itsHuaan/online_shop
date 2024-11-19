@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Title</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/css/bootstrap.css">
+    <link rel="stylesheet" href="/admin/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="/admin/vendors/simple-datatables/style.css">
+    <link rel="stylesheet" href="/admin/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/admin/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/admin/css/app.css">
+    <link rel="shortcut icon" href="/admin/images/logo/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/admin/vendors/apexcharts/apexcharts.css">
+    <link rel="stylesheet" href="/admin/vendors/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="/admin/css/table-datatable-jquery.css">
+    <link rel="stylesheet" href="/admin/vendors/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" href="/admin/vendors/flatpickr/plugins/monthSelect/style.css">
+</head>
+
+<body>
+<div id="app">
+    <div id="sidebar" class="active" th:fragment="sidebar">
+        <div class="sidebar-wrapper active">
+            <div class="sidebar-header">
+                <div class="d-flex justify-content-between">
+                    <div class="logo">
+                        <a href="/"><img src="/images/logo/logo.png" alt="Logo" srcset=""></a>
+                    </div>
+                    <div class="toggler">
+                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul class="menu">
+                    <li class="sidebar-title">Menu</li>
+
+                    <li class="sidebar-item" th:classappend="${currentPath == '/dashboard'} ? 'active'">
+                        <a href="/" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item has-sub"
+                        th:classappend="${currentPath == '/attendances'} ? 'active'">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-table"></i>
+                            <span>Attendances</span>
+                        </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item" th:classappend="${currentPath == '/attendances'} ? 'active'">
+                                <a href="/attendances">Attendances Tracking</a>
+                            </li>
+                            <li class="submenu-item ">
+                                <a href="#">Leave Request</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-item has-sub"
+                        th:classappend="${currentPath == '/ot_registrations' or currentPath == '/ot_register'} ? 'active'">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-clock-fill"></i>
+                            <span>OT</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="submenu-item" th:classappend="${currentPath == '/ot_registrations'} ? 'active'">
+                                <a href="/ot_registrations">Registrations</a>
+                            </li>
+                            <li class="submenu-item" th:classappend="${currentPath == '/ot_register'} ? 'active'">
+                                <a href="ot_register">Register for OT</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-item has-sub"
+                        th:classappend="${currentPath == '/employees' or currentPath == '/add_employee'} ? 'active'">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-person-fill"></i>
+                            <span>Employees</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="submenu-item" th:classappend="${currentPath == '/employees'} ? 'active'">
+                                <a href="/employees">Employee Management</a>
+                            </li>
+                            <li class="submenu-item" th:classappend="${currentPath == '/add_employee'} ? 'active'">
+                                <a href="#">Add an Employee</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-item has-sub"
+                        th:classappend="${currentPath == '/detailed' or currentPath == '/overview'} ? 'active'">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-bar-chart-line-fill"></i>
+                            <span>Statistics</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="submenu-item" th:classappend="${currentPath == '/overview'} ? 'active'">
+                                <a href="/overview">Overview</a>
+                            </li>
+                            <li class="submenu-item" th:classappend="${currentPath == '/detailed'} ? 'active'">
+                                <a href="/detailed">Detailed</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+        </div>
+    </div>
+    <div id="main">
+        <footer th:fragment="footer">
+            <div class="footer clearfix mb-0 text-muted">
+                <div class="float-start">
+                    <p><span th:text="${#dates.format(#dates.createNow(), 'yyyy')} + ' '"></span>&copy;
+                        <span th:text=" Mazer"></span></p>
+                </div>
+                <div class="float-end">
+                    <p class="align-content-center">
+                        <span class="text-danger"><i class="bi bi-heart-fill"></i></span>
+                        <a href="https://www.facebook.com/itsHuaan">itsHuaan</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<div th:fragment="js-libraries">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/admin/vendors/flatpickr/flatpickr.min.js"></script>
+    <script src="/admin/vendors/flatpickr/plugins/monthSelect/index.js"></script>
+    <script src="/admin/js/date-picker.js"></script>
+    <script src="/admin/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/admin/js/bootstrap.bundle.min.js"></script>
+    <script src="/admin/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/admin/vendors/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/admin/js/datatables.js"></script>
+    <script src="/admin/vendors/simple-datatables/simple-datatables.js"></script>
+    <script src="/admin/vendors/dayjs/dayjs.min.js"></script>
+    <script src="/admin/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/admin/js/pages/ui-apexchart.js"></script>
+    <script src="/admin/js/pages/dashboard.js"></script>
+    <script src="/admin/js/main.js"></script>
+</div>
+</body>
+
+</html>

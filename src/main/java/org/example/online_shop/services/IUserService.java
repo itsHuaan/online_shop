@@ -5,4 +5,5 @@ import org.example.online_shop.models.UserModel;
 
 public interface IUserService extends IBaseService<UserDto, UserModel, Long> {
     UserDto findByUsername(String username);
+    UserDto findByEmailOrUsername(String email, String username);
 }

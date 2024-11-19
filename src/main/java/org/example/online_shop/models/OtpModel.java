@@ -15,6 +15,6 @@ public class OtpModel {
     private String otpCode;
     private String email;
     private Boolean status = true;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 }
 

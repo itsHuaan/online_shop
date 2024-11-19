@@ -21,6 +21,7 @@ public class PostEntity {
 
     private String title;
     private String content;
+    private String imageUrl;
     private Boolean status = true;
 
     @Temporal(TemporalType.TIMESTAMP)
