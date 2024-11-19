@@ -28,22 +28,28 @@ public class DiscountController {
 
     @Operation(summary = "Get Discount", tags = {"04. Discount"})
     @GetMapping("/get-discount")
-    public ResponseEntity<?> getUsers() {
+    public ResponseEntity<?> getDiscounts() {
         List<DiscountDto> result = discountService.findAll();
         return result != null && !result.isEmpty()
                 ? new ResponseEntity<>(result, HttpStatus.OK)
                 : new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-
-
     @Operation(summary = "Create New Discount", tags = {"04. Discount"})
     @PostMapping("create-discount")
-    public ResponseEntity<?> createUser(@RequestBody DiscountModel discount) {
+    public ResponseEntity<?> createDiscount(@RequestBody DiscountModel discount) {
         int result = discountService.save(discount);
-        if (result == 1){
+        if (result == 1) {
             return new ResponseEntity<>("Discount created", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Failed to create discount", HttpStatus.BAD_REQUEST);
+    }
+
+    @Operation(summary = "Delete Discount", tags = {"04. Discount"})
+    @DeleteMapping("/delete-discount")
+    public ResponseEntity<?> deleteDiscount(@RequestParam Long discountId) {
+        return discountService.delete(discountId) != 0
+                ? new ResponseEntity<>("Discount deleted", HttpStatus.OK)
+                : new ResponseEntity<>("Failed to delete discount", HttpStatus.NO_CONTENT);
     }
 }
