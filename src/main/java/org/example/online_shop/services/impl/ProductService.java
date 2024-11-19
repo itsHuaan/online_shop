@@ -8,7 +8,9 @@ import org.example.online_shop.models.ProductModel;
 import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IProductRepository;
 import org.example.online_shop.services.IProductService;
+import org.example.online_shop.utils.specifications.ProductSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -28,7 +30,7 @@ public class ProductService implements IProductService {
 
     @Override
     public List<ProductDto> findAll() {
-        return productRepository.findAll().stream().map(productMapper::toDTO).toList();
+        return productRepository.findAll(Specification.where(ProductSpecifications.isActive())).stream().map(productMapper::toDTO).toList();
     }
 
     @Override
@@ -52,8 +54,10 @@ public class ProductService implements IProductService {
 
     @Override
     public int delete(Long id) {
-        if (productRepository.existsById(id)) {
-            productRepository.deleteById(id);
+        ProductEntity currentProduct = productRepository.findById(id).orElse(null);
+        if (currentProduct != null) {
+            currentProduct.setStatus(false);
+            productRepository.save(currentProduct);
             return 1;
         }
         return 0;

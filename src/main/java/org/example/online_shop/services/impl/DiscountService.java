@@ -6,7 +6,9 @@ import org.example.online_shop.mappers.impl.DiscountMapper;
 import org.example.online_shop.models.DiscountModel;
 import org.example.online_shop.repositories.IDiscountRepository;
 import org.example.online_shop.services.IDiscountService;
+import org.example.online_shop.utils.specifications.DiscountSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -26,7 +28,7 @@ public class DiscountService implements IDiscountService {
 
     @Override
     public List<DiscountDto> findAll() {
-        return discountRepository.findAll().stream().map(discountMapper::toDTO).toList();
+        return discountRepository.findAll(Specification.where(DiscountSpecifications.isActive())).stream().map(discountMapper::toDTO).toList();
     }
 
     @Override
@@ -50,8 +52,10 @@ public class DiscountService implements IDiscountService {
 
     @Override
     public int delete(Long id) {
-        if (discountRepository.existsById(id)) {
-            discountRepository.deleteById(id);
+        DiscountEntity discountEntity = discountRepository.findById(id).orElse(null);
+        if (discountEntity != null) {
+            discountEntity.setStatus(false);
+            discountRepository.save(discountEntity);
             return 1;
         }
         return 0;
