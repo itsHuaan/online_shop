@@ -61,11 +61,8 @@ public class UserController {
     @Operation(summary = "Update Users", tags = {"01. User"})
     @PutMapping("/update-user")
     public ResponseEntity<?> updateUsersInfo(@RequestParam Long id, @RequestBody UserModel user) {
-        UserDto oldUser = id != null
-                ? userService.findById(id)
-                : null;
-        if (oldUser == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_MODIFIED);
+        if (userService.findById(id) == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
         user.setUserId(id);
         return userService.save(user) == 2
