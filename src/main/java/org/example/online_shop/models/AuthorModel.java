@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class AuthorModel {
+    private Long authorId;
     private String name;
     private Boolean status = true;
     private LocalDateTime createdDate = LocalDateTime.now();
