@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class DiscountModel {
+    private Long discountId;
     private String name;
     private double discountPercentage;
     private LocalDate expiryDate;
