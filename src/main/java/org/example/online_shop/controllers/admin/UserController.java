@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Tag(name = "01. User")
@@ -41,6 +42,30 @@ public class UserController {
         if (isExisting) {
             return new ResponseEntity<>("Email or Username has been taken by another user", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
+        return new ResponseEntity<>("User created", HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Delete Users", tags = {"01. User"})
+    @GetMapping("/delete-user")
+    public ResponseEntity<?> deleteUsers(@RequestParam long id) {
+        int result = userService.delete(id);
+        return result != 0
+                ? new ResponseEntity<>("User deleted", HttpStatus.OK)
+                : new ResponseEntity<>("Failed to delete user", HttpStatus.BAD_REQUEST);
+    }
+
+    @Operation(summary = "Update Users", tags = {"01. User"})
+    @PutMapping("/update-user")
+    public ResponseEntity<?> updateUsersInfo(@RequestParam Long id, @RequestBody UserModel user) {
+        UserDto oldUser = id != null
+                ? userService.findById(id)
+                : null;
+        if (oldUser == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_MODIFIED);
+        }
+        UserModel newUser = userService.mapNonNullFields(oldUser, user);
+        return userService.save(newUser) == 1
+                ? new ResponseEntity<>(newUser, HttpStatus.OK)
+                : new ResponseEntity<>("Failed to update user", HttpStatus.BAD_REQUEST);
     }
 }

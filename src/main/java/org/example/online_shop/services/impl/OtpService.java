@@ -7,7 +7,6 @@ import org.example.online_shop.models.OtpModel;
 import org.example.online_shop.repositories.IOtpRepository;
 import org.example.online_shop.services.IOtpService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -49,10 +48,11 @@ public class OtpService implements IOtpService {
     }
 
     @Override
-    public OtpDto save(OtpModel otpModel) {
+    public int save(OtpModel otpModel) {
         OtpEntity otpEntity = otpMapper.toEntity(otpModel);
         otpEntity.setOtpCode(generateOtp());
-        return otpMapper.toDTO(otpRepository.save(otpEntity));
+        otpRepository.save(otpEntity);
+        return 1;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class OtpService implements IOtpService {
         return 0;
     }
 
-    private String generateOtp(){
+    private String generateOtp() {
         SecureRandom secureRandom = new SecureRandom();
         StringBuilder otp = new StringBuilder(OTP_LENGTH);
         for (int i = 0; i < OTP_LENGTH; i++) {
@@ -70,7 +70,7 @@ public class OtpService implements IOtpService {
         return otp.toString();
     }
 
-    public void invalidateExpiredOtps(){
+    public void invalidateExpiredOtps() {
         LocalDateTime expireTime = LocalDateTime.now().minusMinutes(3);
         List<OtpEntity> expiredOtps = otpRepository.findAllByCreatedDateBeforeAndStatusTrue(expireTime);
         for (OtpEntity otpEntity : expiredOtps) {
@@ -78,6 +78,7 @@ public class OtpService implements IOtpService {
             otpRepository.save(otpEntity);
         }
     }
+
     private void startOtpInvalidationTask() {
         scheduler.scheduleWithFixedDelay(() -> {
             try {

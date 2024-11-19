@@ -21,7 +21,7 @@ public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
         return UserDto.builder()
                 .userId(entity.getUserId())
                 .username(entity.getUsername())
-                .password(entity.getPassword())
+//                .password(entity.getPassword())
                 .address(entity.getAddress())
                 .email(entity.getEmail())
                 .name(entity.getName())

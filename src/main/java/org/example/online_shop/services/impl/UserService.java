@@ -7,15 +7,14 @@ import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IUserRepository;
 import org.example.online_shop.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService, UserDetailsService {
@@ -39,18 +38,18 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    public UserDto save(UserModel model) {
-        return userMapper.toDTO(userRepository.save(userMapper.toEntity(model)));
+    public int save(UserModel model) {
+        userRepository.save(userMapper.toEntity(model));
+        return 1;
     }
 
     @Override
     public int delete(Long id) {
-        try {
+        if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return 1;
-        } catch (EmptyResultDataAccessException e) {
-            return 0;
         }
+        return 0;
     }
 
     @Override
@@ -68,5 +67,27 @@ public class UserService implements IUserService, UserDetailsService {
         return userRepository.findByEmailOrUsername(email, username)
                 .map(userMapper::toDTO)
                 .orElse(null);
+    }
+
+    @Override
+    public UserModel mapNonNullFields(UserDto userDto, UserModel userModel) {
+        for (Field f : userModel.getClass().getDeclaredFields()) {
+            try {
+                Field dtoField = userDto.getClass().getDeclaredField(f.getName());
+                f.setAccessible(true);
+                if (f.get(userModel) == null) {
+                    dtoField.setAccessible(true);
+                    Object value = dtoField.get(userDto);
+                    if (value != null) {
+                        f.set(userModel, value);
+                    }
+                }
+            } catch (NoSuchFieldException e) {
+                System.out.println("Field missing in ProfileDto: " + f.getName());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return userModel;
     }
 }
