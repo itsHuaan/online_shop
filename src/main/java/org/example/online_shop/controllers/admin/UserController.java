@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @Operation(summary = "Delete Users", tags = {"01. User"})
-    @GetMapping("/delete-user")
+    @DeleteMapping("/delete-user")
     public ResponseEntity<?> deleteUsers(@RequestParam long id) {
         int result = userService.delete(id);
         return result != 0
