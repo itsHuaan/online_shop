@@ -26,5 +26,9 @@ public class AuthorEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdDate;
+
+    public AuthorEntity(String name) {
+        this.name = name;
+    }
 }
 

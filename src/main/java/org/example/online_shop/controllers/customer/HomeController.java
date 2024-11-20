@@ -10,6 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @GetMapping("/")
     public String homePage(Model model) {
-        return "index";
+        return "customer/about";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "customer/login";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        return "customer/register";
+    }
+
+    @GetMapping("/product")
+    public String product(Model model) {
+        return "customer/product";
     }
 }
