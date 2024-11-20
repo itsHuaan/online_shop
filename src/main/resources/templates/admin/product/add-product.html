@@ -46,119 +46,109 @@
                                                             type="text"
                                                             id="book-name"
                                                             class="form-control"
-                                                            placeholder="First Name"
-                                                            name="fname-column"
+                                                            placeholder="Book Name"
                                                             data-parsley-required="true"
                                                     />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label for="last-name-column" class="form-label"
-                                                    >Last Name</label>
-                                                    <input
-                                                            type="text"
-                                                            id="last-name-column"
-                                                            class="form-control"
-                                                            placeholder="Last Name"
-                                                            name="lname-column"
-                                                            data-parsley-required="true"
-                                                    />
+                                                <div class="form-group mandatory">
+                                                    <label for="book-category" class="form-label">Category</label>
+                                                    <select id="book-category" class="form-select" aria-label="Default select example" required>
+                                                        <option value="" selected disabled>Select a category</option>
+                                                        <option value="">1</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="book-description" class="form-label">Last Name</label>
+                                                <div class="form-group mandatory">
+                                                    <label for="book-description" class="form-label">Book Description</label>
                                                     <div id="book-description">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label for="country-floating" class="form-label"
-                                                    >Country</label
-                                                    >
+                                                <div class="form-group mandatory">
+                                                    <label for="book-publish" class="form-label">Year Of Publication</label>
                                                     <input
-                                                            type="text"
-                                                            id="country-floating"
+                                                            type="number"
+                                                            id="book-publish"
                                                             class="form-control"
-                                                            name="country-floating"
-                                                            placeholder="Country"
-                                                            data-parsley-required="true"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label for="company-column" class="form-label"
-                                                    >Company</label
-                                                    >
-                                                    <input
-                                                            type="text"
-                                                            id="company-column"
-                                                            class="form-control"
-                                                            name="company-column"
-                                                            placeholder="Company"
+                                                            placeholder="Year of Publication"
+                                                            min="0"
+                                                            th:attr="max=${#dates.format(#dates.createNow(), 'yyyy')}"
                                                             data-parsley-required="true"
                                                     />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
-                                                    <label for="email-id-column5" class="form-label"
-                                                    >Email</label
-                                                    >
+                                                    <label for="book-author" class="form-label">Category</label>
+                                                    <select id="book-author" class="form-select" aria-label="Default select example" required>
+                                                        <option value="" selected disabled>Select Author</option>
+                                                        <option value="">1</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-import-price" class="form-label">Import Price</label>
                                                     <input
-                                                            type="email"
-                                                            id="email-id-column5"
+                                                            type="number"
+                                                            id="book-import-price"
                                                             class="form-control"
-                                                            name="email-id-column"
-                                                            placeholder="Email"
+                                                            placeholder="Import Price"
+                                                            min="0"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-sale-price" class="form-label">Listed Price</label>
+                                                    <input
+                                                            type="number"
+                                                            id="book-sale-price"
+                                                            class="form-control"
+                                                            placeholder="Listed price"
+                                                            min="0"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-stock" class="form-label">Stock</label>
+                                                    <input
+                                                            type="number"
+                                                            id="book-stock"
+                                                            class="form-control"
+                                                            placeholder="Stock"
+                                                            min="0"
                                                             data-parsley-required="true"
                                                     />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
-                                                    <label for="email-id-column4" class="form-label"
-                                                    >Email</label
-                                                    >
+                                                    <label for="book-total-pages" class="form-label">Total Page</label>
                                                     <input
-                                                            type="email"
-                                                            id="email-id-column4"
+                                                            type="number"
+                                                            id="book-total-pages"
                                                             class="form-control"
-                                                            name="email-id-column"
-                                                            placeholder="Email"
+                                                            placeholder="Total Pages"
+                                                            min="0"
                                                             data-parsley-required="true"
                                                     />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
-                                                    <label for="email-id-column3" class="form-label"
-                                                    >Email</label
-                                                    >
-                                                    <input
-                                                            type="email"
-                                                            id="email-id-column3"
-                                                            class="form-control"
-                                                            name="email-id-column"
-                                                            placeholder="Email"
-                                                            data-parsley-required="true"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group mandatory">
-                                                    <label for="email-id-column2" class="form-label">Email</label>
-                                                    <input
-                                                            type="email"
-                                                            id="email-id-column2"
-                                                            class="form-control"
-                                                            name="email-id-column"
-                                                            placeholder="Email"
-                                                            data-parsley-required="true"
-                                                    />
+                                                    <label for="book-discount" class="form-label">Discount</label>
+                                                    <select id="book-discount" class="form-select" aria-label="Default select example" required>
+                                                        <option value="" selected disabled>Select Promotion</option>
+                                                        <option value="">1</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-12">
