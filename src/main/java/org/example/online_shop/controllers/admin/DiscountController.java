@@ -3,9 +3,8 @@ package org.example.online_shop.controllers.admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.online_shop.dto.DiscountDto;
-import org.example.online_shop.dto.UserDto;
 import org.example.online_shop.models.DiscountModel;
-import org.example.online_shop.models.UserModel;
+import org.example.online_shop.services.IDiscountService;
 import org.example.online_shop.services.impl.DiscountService;
 import org.example.online_shop.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = Const.API_PREFIX + "/discount")
 public class DiscountController {
-    private final DiscountService discountService;
+    private final IDiscountService discountService;
 
     @Autowired
-    public DiscountController(DiscountService discountService) {
+    public DiscountController(IDiscountService discountService) {
         this.discountService = discountService;
     }
 

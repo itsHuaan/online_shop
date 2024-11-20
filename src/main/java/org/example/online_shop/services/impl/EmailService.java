@@ -3,6 +3,7 @@ package org.example.online_shop.services.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.example.online_shop.models.EmailModel;
+import org.example.online_shop.services.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,11 +11,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IEmailService implements org.example.online_shop.services.IEmailService {
+public class EmailService implements IEmailService {
     private final JavaMailSender emailSender;
 
     @Autowired
-    public IEmailService(JavaMailSender emailSender) {
+    public EmailService(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
 

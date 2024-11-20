@@ -14,21 +14,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = Const.API_PREFIX + "/category")
 public class CategoryController {
 
-    private final ICategoryService iCategoryService;
+    private final ICategoryService categoryService;
 
-    public CategoryController(ICategoryService iCategoryService) {
-        this.iCategoryService = iCategoryService;
+    public CategoryController(ICategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
 
     @Operation(summary = "Create New Category", tags = {"03. Category"})
     @PostMapping("/create-category")
     public ResponseEntity<?> createCategory(@RequestBody CategoryModel categoryModel){
-        int check = iCategoryService.checkCategory(categoryModel);
+        int check = categoryService.checkCategory(categoryModel);
         if (check == 0){
             return new ResponseEntity<>("Danh mục đã tồn tại", HttpStatus.BAD_REQUEST);
         }
-        int result = iCategoryService.save(categoryModel);
+        int result = categoryService.save(categoryModel);
         if (result == 1){
             return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
         } else {
@@ -40,7 +40,7 @@ public class CategoryController {
     @PostMapping("/update-category/{id}")
     public ResponseEntity<?> updateCategory(@RequestBody CategoryModel categoryModel, @PathVariable Long id){
         categoryModel.setCategoryId(id);
-        int result = iCategoryService.save(categoryModel);
+        int result = categoryService.save(categoryModel);
         if (result == 2){
             return new  ResponseEntity<>("Sửa thành công", HttpStatus.OK);
         } else {
@@ -51,7 +51,7 @@ public class CategoryController {
     @Operation(summary = "Delete Category", tags = {"03. Category"})
     @GetMapping("/delete-category/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable long id){
-        int result = iCategoryService.delete(id);
+        int result = categoryService.delete(id);
         if (result == 1){
             return new ResponseEntity<>("Xóa thành công", HttpStatus.OK);
         }else {

@@ -5,6 +5,7 @@ import org.example.online_shop.entities.DiscountEntity;
 import org.example.online_shop.mappers.impl.DiscountMapper;
 import org.example.online_shop.models.DiscountModel;
 import org.example.online_shop.repositories.IDiscountRepository;
+import org.example.online_shop.services.IDiscountService;
 import org.example.online_shop.utils.specifications.DiscountSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,12 +16,12 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class IDiscountService implements org.example.online_shop.services.IDiscountService {
+public class DiscountService implements IDiscountService {
     private final IDiscountRepository discountRepository;
     private final DiscountMapper discountMapper;
 
     @Autowired
-    public IDiscountService(IDiscountRepository discountRepository, DiscountMapper discountMapper) {
+    public DiscountService(IDiscountRepository discountRepository, DiscountMapper discountMapper) {
         this.discountRepository = discountRepository;
         this.discountMapper = discountMapper;
     }

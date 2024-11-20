@@ -8,18 +8,19 @@ import org.example.online_shop.dto.UserDto;
 import org.example.online_shop.models.SignInRequest;
 import org.example.online_shop.models.SignInResponse;
 import org.example.online_shop.models.UserModel;
+import org.example.online_shop.services.IUserService;
 import org.example.online_shop.services.impl.UserService;
 import org.example.online_shop.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 @Tag(name = "01. User")
@@ -28,10 +29,10 @@ import java.util.List;
 public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
-    private final UserService userService;
+    private final IUserService userService;
 
     @Autowired
-    public UserController(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserService userService) {
+    public UserController(AuthenticationManager authenticationManager, JwtProvider jwtProvider, IUserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
         this.userService = userService;

@@ -1,8 +1,9 @@
 package org.example.online_shop.controllers.admin;
 
-import org.example.online_shop.services.impl.ProductService;
-import org.example.online_shop.services.impl.UserService;
+import org.example.online_shop.services.IProductService;
+import org.example.online_shop.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private final ProductService productService;
-    private final UserService userService;
+    private final IProductService productService;
+    private final IUserService userService;
 
     @Autowired
-    public AdminController(ProductService productService, UserService userService) {
+    public AdminController(IProductService productService, IUserService userService) {
         this.productService = productService;
         this.userService = userService;
     }

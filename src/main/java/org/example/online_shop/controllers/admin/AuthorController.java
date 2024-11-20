@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = Const.API_PREFIX + "/author")
 public class AuthorController {
-    private final IAuthorService iAuthorService;
+    private final IAuthorService authorService;
 
-    public AuthorController(IAuthorService iAuthorService) {
-        this.iAuthorService = iAuthorService;
+    public AuthorController(IAuthorService authorService) {
+        this.authorService = authorService;
     }
 
     @Operation(summary = "Create New Author", tags = {"05. Author"})
     @PostMapping("/create-author")
     public ResponseEntity<?> createAuthor(@RequestBody AuthorModel authorModel){
-        int result = iAuthorService.save(authorModel);
+        int result = authorService.save(authorModel);
         if (result == 1){
             return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
         }else {
@@ -34,7 +34,7 @@ public class AuthorController {
     @PostMapping("/update-author/{id}")
     public ResponseEntity<?> updateAuthor(@RequestBody AuthorModel authorModel, @PathVariable Long id){
         authorModel.setAuthorId(id);
-        int result = iAuthorService.save(authorModel);
+        int result = authorService.save(authorModel);
         if (result == 2){
             return new ResponseEntity<>("Sửa thành công", HttpStatus.OK);
         }else {
@@ -45,7 +45,7 @@ public class AuthorController {
     @Operation(summary = "Delete Author", tags = {"05. Author"})
     @GetMapping("/delete-author/{id}")
     public ResponseEntity<?> deleteAuthor(@PathVariable Long id){
-        int result = iAuthorService.delete(id);
+        int result = authorService.delete(id);
         if (result == 1){
             return new ResponseEntity<>("Xóa thành công", HttpStatus.OK);
         }else {

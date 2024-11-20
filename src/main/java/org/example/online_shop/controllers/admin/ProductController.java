@@ -5,8 +5,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.online_shop.dto.ProductDto;
 import org.example.online_shop.models.ProductModel;
 import org.example.online_shop.services.IProductService;
-import org.example.online_shop.services.impl.ProductService;
-import org.example.online_shop.services.impl.UserService;
 import org.example.online_shop.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

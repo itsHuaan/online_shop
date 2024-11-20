@@ -3,11 +3,11 @@ package org.example.online_shop.controllers.admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.online_shop.configurations.jwtConfig.JwtProvider;
-import org.example.online_shop.dto.OtpDto;
-import org.example.online_shop.mappers.impl.OtpMapper;
 import org.example.online_shop.models.EmailModel;
 import org.example.online_shop.models.ForgetPasswordRequest;
 import org.example.online_shop.models.OtpModel;
+import org.example.online_shop.services.IEmailService;
+import org.example.online_shop.services.IOtpService;
 import org.example.online_shop.services.impl.EmailService;
 import org.example.online_shop.services.impl.OtpService;
 import org.example.online_shop.utils.Const;
@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = Const.API_PREFIX + "/registration")
 public class RegistrationController {
-    private final OtpService otpService;
-    private final EmailService emailService;
+    private final IOtpService otpService;
+    private final IEmailService emailService;
     private final JwtProvider jwtProvider;
 
     @Autowired
-    public RegistrationController(OtpService otpService, EmailService emailService, JwtProvider jwtProvider) {
+    public RegistrationController(IOtpService otpService, IEmailService emailService, JwtProvider jwtProvider) {
         this.otpService = otpService;
         this.emailService = emailService;
         this.jwtProvider = jwtProvider;
