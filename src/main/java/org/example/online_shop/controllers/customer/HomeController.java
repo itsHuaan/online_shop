@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/home")
 public class HomeController {
     @GetMapping("/")
     public String homePage(Model model) {
@@ -15,5 +16,15 @@ public class HomeController {
     @GetMapping("/login")
     public String login(Model model) {
         return "customer/login";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        return "customer/register";
+    }
+
+    @GetMapping("/product")
+    public String product(Model model) {
+        return "customer/product";
     }
 }
