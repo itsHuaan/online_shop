@@ -31,6 +31,7 @@ public class JwtProvider {
         UserDto userDto = userService.findByUsername(Username);
         return Jwts.builder()
                 .setSubject(Long.toString(userDto.getUserId()))
+                .claim("email", userDto.getEmail())
                 .claim("username", userDto.getUsername())
                 .claim("role", userDto.getRoleId())
                 .setExpiration(expiryDate)

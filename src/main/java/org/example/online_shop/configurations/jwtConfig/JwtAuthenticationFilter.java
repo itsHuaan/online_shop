@@ -23,15 +23,13 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     private final UserService userService;
-    private final IUserRepository userRepository;
     @Value("${jwt.secret-key}")
     private String JWT_SECRET;
 
     @Autowired
-    public JwtAuthenticationFilter(JwtProvider jwtProvider, UserService userService, IUserRepository userRepository) {
+    public JwtAuthenticationFilter(JwtProvider jwtProvider, UserService userService) {
         this.jwtProvider = jwtProvider;
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @Override

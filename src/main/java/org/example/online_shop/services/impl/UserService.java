@@ -48,7 +48,7 @@ public class UserService implements IUserService, UserDetailsService {
         UserEntity currentUser = model.getUserId() != null
                 ? userRepository.findById(model.getUserId()).orElse(null)
                 : null;
-        if (currentUser != null && currentUser.getPassword() == null) {
+        if (currentUser != null) {
             userRepository.save(mapNonNullFieldsToEntity(model, currentUser));
             return 2;
         } else {

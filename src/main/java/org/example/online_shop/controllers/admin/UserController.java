@@ -2,13 +2,21 @@ package org.example.online_shop.controllers.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.example.online_shop.configurations.UserDetailsImpl;
+import org.example.online_shop.configurations.jwtConfig.JwtProvider;
 import org.example.online_shop.dto.UserDto;
+import org.example.online_shop.models.SignInRequest;
+import org.example.online_shop.models.SignInResponse;
 import org.example.online_shop.models.UserModel;
 import org.example.online_shop.services.impl.UserService;
 import org.example.online_shop.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
@@ -18,11 +26,14 @@ import java.util.List;
 @RestController
 @RequestMapping(value = Const.API_PREFIX + "/user")
 public class UserController {
-
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserService userService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
         this.userService = userService;
     }
 
@@ -43,7 +54,7 @@ public class UserController {
             return new ResponseEntity<>("Email or Username has been taken by another user", HttpStatus.CONFLICT);
         }
         int result = userService.save(user);
-        if (result == 1){
+        if (result == 1) {
             return new ResponseEntity<>("User created", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("User creation failed", HttpStatus.CONFLICT);
@@ -68,5 +79,25 @@ public class UserController {
         return userService.save(user) == 2
                 ? new ResponseEntity<>("User updated", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to update user", HttpStatus.BAD_REQUEST);
+    }
+
+
+    @Operation(summary = "Sign Users In", tags = {"01. User"})
+    @PostMapping("/sign-in")
+    public ResponseEntity<?> signIn(@RequestBody SignInRequest credentials) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = jwtProvider.generateTokenByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(new SignInResponse(
+                userDetails.getUserEntity().getUserId(),
+                "Bearer",
+                jwt,
+                userDetails.getUsername(),
+                userDetails.getUser().getEmail(),
+                userDetails.getUser().getStatus(),
+                userDetails.getRoleName()
+        ), HttpStatus.OK);
     }
 }
