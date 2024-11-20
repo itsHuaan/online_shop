@@ -6,7 +6,6 @@ import org.example.online_shop.entities.UserEntity;
 import org.example.online_shop.mappers.impl.UserMapper;
 import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IUserRepository;
-import org.example.online_shop.services.IUserService;
 import org.example.online_shop.utils.specifications.UserSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,13 +20,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserService implements IUserService, UserDetailsService {
+public class IUserService implements org.example.online_shop.services.IUserService, UserDetailsService {
     private final IUserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(IUserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public IUserService(IUserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;

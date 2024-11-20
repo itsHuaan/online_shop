@@ -5,7 +5,6 @@ import org.example.online_shop.entities.OtpEntity;
 import org.example.online_shop.mappers.impl.OtpMapper;
 import org.example.online_shop.models.OtpModel;
 import org.example.online_shop.repositories.IOtpRepository;
-import org.example.online_shop.services.IOtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +19,13 @@ import static org.example.online_shop.utils.Const.OTP_LENGTH;
 import static org.example.online_shop.utils.Const.SALTCHARS;
 
 @Service
-public class OtpService implements IOtpService {
+public class IOtpService implements org.example.online_shop.services.IOtpService {
     private final IOtpRepository otpRepository;
     private final OtpMapper otpMapper;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     @Autowired
-    public OtpService(IOtpRepository otpRepository, OtpMapper otpMapper) {
+    public IOtpService(IOtpRepository otpRepository, OtpMapper otpMapper) {
         this.otpRepository = otpRepository;
         this.otpMapper = otpMapper;
         startOtpInvalidationTask();
