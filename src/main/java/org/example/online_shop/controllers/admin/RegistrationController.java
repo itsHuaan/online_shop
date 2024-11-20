@@ -22,14 +22,12 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
     private final OtpService otpService;
     private final EmailService emailService;
-    private final OtpMapper otpMapper;
     private final JwtProvider jwtProvider;
 
     @Autowired
-    public RegistrationController(OtpService otpService, EmailService emailService, OtpMapper otpMapper, JwtProvider jwtProvider) {
+    public RegistrationController(OtpService otpService, EmailService emailService, JwtProvider jwtProvider) {
         this.otpService = otpService;
         this.emailService = emailService;
-        this.otpMapper = otpMapper;
         this.jwtProvider = jwtProvider;
     }
 

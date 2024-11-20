@@ -37,8 +37,8 @@ public class CategoryController {
     }
 
     @Operation(summary = "Update Category", tags = {"03. Category"})
-    @PostMapping("/update-category")
-    public ResponseEntity<?> updateCategory(@RequestBody CategoryModel categoryModel, @RequestParam("id") Long id){
+    @PostMapping("/update-category/{id}")
+    public ResponseEntity<?> updateCategory(@RequestBody CategoryModel categoryModel, @PathVariable Long id){
         categoryModel.setCategoryId(id);
         int result = iCategoryService.save(categoryModel);
         if (result == 2){
@@ -49,8 +49,8 @@ public class CategoryController {
     }
 
     @Operation(summary = "Delete Category", tags = {"03. Category"})
-    @GetMapping("/delete-category")
-    public ResponseEntity<?> deleteCategory(@RequestParam("id") long id){
+    @GetMapping("/delete-category/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable long id){
         int result = iCategoryService.delete(id);
         if (result == 1){
             return new ResponseEntity<>("Xóa thành công", HttpStatus.OK);

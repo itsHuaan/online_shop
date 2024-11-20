@@ -20,6 +20,7 @@ public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
                 .email(entity.getEmail())
                 .name(entity.getName())
                 .phone(entity.getPhone())
+                .status(entity.getStatus())
                 .roleId(entity.getRole().getRoleId())
                 .build();
     }
@@ -39,6 +40,7 @@ public class UserMapper implements IBaseMapper<UserDto, UserModel, UserEntity> {
                 .role(role)
                 .createdDate(model.getCreatedDate())
                 .profilePicture(model.getProfilePicture())
+                .status(model.getStatus())
                 .build();
     }
 }

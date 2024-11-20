@@ -61,8 +61,8 @@ public class UserController {
     }
 
     @Operation(summary = "Delete Users", tags = {"01. User"})
-    @DeleteMapping("/delete-user")
-    public ResponseEntity<?> deleteUsers(@RequestParam long id) {
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<?> deleteUsers(@PathVariable long id) {
         int result = userService.delete(id);
         return result != 0
                 ? new ResponseEntity<>("User deleted", HttpStatus.OK)
@@ -70,8 +70,8 @@ public class UserController {
     }
 
     @Operation(summary = "Update Users", tags = {"01. User"})
-    @PutMapping("/update-user")
-    public ResponseEntity<?> updateUsersInfo(@RequestParam Long id, @RequestBody UserModel user) {
+    @PutMapping("/update-user/{id}")
+    public ResponseEntity<?> updateUsersInfo(@PathVariable Long id, @RequestBody UserModel user) {
         if (userService.findById(id) == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }

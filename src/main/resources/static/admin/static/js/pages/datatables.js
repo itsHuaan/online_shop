@@ -18,7 +18,7 @@ let customized_datatable = $("#table2").DataTable({
 })
 
 // user table
-let productTable = $("#product-table").DataTable({
+let productTable = $("#customized-table").DataTable({
     responsive: true,
     ordering: true,
     order: [],

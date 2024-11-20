@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
-<head th:replace="~{admin/components/head :: head('Book List')}"></head>
+<head th:replace="~{admin/components/head :: head('Customer List')}"></head>
 
 <body>
 <script src="/admin/static/js/initTheme.js"></script>
@@ -17,14 +17,14 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Book List</h3>
+                        <h3>Customer List</h3>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Book Management</li>
-                                <li class="breadcrumb-item active" aria-current="page">Book List</li>
+                                <li class="breadcrumb-item active" aria-current="page">User Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Customer List</li>
                             </ol>
                         </nav>
                     </div>
@@ -39,36 +39,36 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Import Price</th>
-                                    <th>Stock</th>
-                                    <th>Sold</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="book : ${books}"
-                                    th:attr="data-id=${book.productId}">
+                                <tr th:each="customer : ${customers}"
+                                    th:attr="data-id=${customer.userId}">
                                     <td>
-                                        <span th:text="${book.name}"></span>
+                                        <span th:text="${customer.name}"></span>
                                     </td>
                                     <td>
-                                        <span th:text="${book.categoryName}"></span>
+                                        <span th:text="${customer.username}"></span>
                                     </td>
                                     <td>
-                                        <span th:text="${book.importPrice} + '&#8363'"></span>
+                                        <span th:text="${customer.email}"></span>
                                     </td>
                                     <td>
-                                        <span th:text="${book.stock}"></span>
+                                        <span th:text="${customer.phone}"></span>
                                     </td>
                                     <td>
-                                        <span th:text="${book.sold}"></span>
+                                        <span th:text="${customer.address}"></span>
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill"
-                                              th:classappend="${book.status ? 'bg-success' : 'bg-danger'}"
-                                              th:text="${book.status ? 'Active' : 'Inactive'}">
+                                              th:classappend="${customer.status ? 'bg-success' : 'bg-danger'}"
+                                              th:text="${customer.status ? 'Active' : 'Inactive'}">
                                         </span>
                                     </td>
                                     <td>

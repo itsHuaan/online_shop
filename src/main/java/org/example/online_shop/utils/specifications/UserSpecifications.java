@@ -12,4 +12,8 @@ public class UserSpecifications {
         return (Root<UserEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("status"), true);
     }
+    public static Specification<UserEntity> hasRole(Long roleId) {
+        return (Root<UserEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("role").get("roleId"), roleId);
+    }
 }

@@ -27,6 +27,7 @@ public class ProductMapper implements IBaseMapper<ProductDto, ProductModel, Prod
                 .authorName(entity.getAuthor().getName())
                 .publishDate(entity.getPublishDate())
                 .importPrice(entity.getImportPrice())
+                .status(entity.getStatus())
                 .build();
     }
 

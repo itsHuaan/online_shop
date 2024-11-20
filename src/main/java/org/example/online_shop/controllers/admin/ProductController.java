@@ -60,8 +60,8 @@ public class ProductController {
     }
 
     @Operation(summary = "Update Products", tags = {"06. Product"})
-    @PutMapping("/update-product")
-    public ResponseEntity<?> updateProduct(@RequestParam Long id, @RequestBody ProductModel product) {
+    @PutMapping("/update-product/{id}")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductModel product, @PathVariable Long id) {
         if (productService.findById(id) == null) {
             return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
         }
@@ -72,8 +72,8 @@ public class ProductController {
     }
 
     @Operation(summary = "Delete Products", tags = {"06. Product"})
-    @DeleteMapping("/delete-product")
-    public ResponseEntity<?> deleteProduct(@RequestParam Long id) {
+    @DeleteMapping("/delete-product/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         return productService.delete(id) != 0
                 ? new ResponseEntity<>("Product deleted", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to delete product", HttpStatus.BAD_REQUEST);

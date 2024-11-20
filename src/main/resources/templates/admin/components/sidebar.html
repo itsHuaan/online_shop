@@ -55,9 +55,32 @@
                     </a>
                 </li>
                 <li class="sidebar-item has-sub"
+                    th:classappend="${currentPath == '/customers'
+                    or currentPath == '/admins'
+                    or currentPath == '/add-admin' } ? 'active'">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-people-fill"></i>
+                        <span>User Management</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item"
+                            th:classappend="${currentPath == '/add-admin'} ? 'active'">
+                            <a href="#" class="submenu-link">Add another Admin</a>
+                        </li>
+                        <li class="submenu-item"
+                            th:classappend="${currentPath == '/admins'} ? 'active'">
+                            <a href="./admins" class="submenu-link">Admin list</a>
+                        </li>
+                        <li class="submenu-item"
+                            th:classappend="${currentPath == '/customers'} ? 'active'">
+                            <a href="./customers" class="submenu-link">Customer list</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item has-sub"
                     th:classappend="${currentPath == '/products' or currentPath == '/add-products'} ? 'active'">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
+                        <i class="bi bi-book-fill"></i>
                         <span>Books Management</span>
                     </a>
                     <ul class="submenu">

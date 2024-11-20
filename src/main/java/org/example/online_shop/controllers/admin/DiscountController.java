@@ -46,20 +46,20 @@ public class DiscountController {
     }
 
     @Operation(summary = "Delete Discount", tags = {"04. Discount"})
-    @DeleteMapping("/delete-discount")
-    public ResponseEntity<?> deleteDiscount(@RequestParam Long discountId) {
-        return discountService.delete(discountId) != 0
+    @DeleteMapping("/delete-discount/{id}")
+    public ResponseEntity<?> deleteDiscount(@PathVariable Long id) {
+        return discountService.delete(id) != 0
                 ? new ResponseEntity<>("Discount deleted", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to delete discount", HttpStatus.NO_CONTENT);
     }
 
     @Operation(summary = "Update Discount", tags = {"04. Discount"})
-    @PutMapping("/update-discount")
-    public ResponseEntity<?> updateDiscount(@RequestParam Long discountId, @RequestBody DiscountModel discount) {
-        if (discountService.findById(discountId) == null) {
+    @PutMapping("/update-discount/{id}")
+    public ResponseEntity<?> updateDiscount(@PathVariable Long id, @RequestBody DiscountModel discount) {
+        if (discountService.findById(id) == null) {
             return new ResponseEntity<>("Discount not found", HttpStatus.NOT_FOUND);
         }
-        discount.setDiscountId(discountId);
+        discount.setDiscountId(id);
         return discountService.save(discount) == 2
                 ? new ResponseEntity<>("Discount updated", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to update discount", HttpStatus.BAD_REQUEST);

@@ -86,6 +86,11 @@ public class UserService implements IUserService, UserDetailsService {
                 .orElse(null);
     }
 
+    @Override
+    public List<UserDto> findByRoleId(Long roleId) {
+        return userRepository.findAll(Specification.where(UserSpecifications.hasRole(roleId))).stream().map(userMapper::toDTO).toList();
+    }
+
     private UserEntity mapNonNullFieldsToEntity(UserModel userModel, UserEntity userEntity) {
         for (Field userField : userModel.getClass().getDeclaredFields()) {
             try {
