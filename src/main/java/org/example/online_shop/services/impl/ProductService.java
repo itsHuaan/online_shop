@@ -87,4 +87,45 @@ public class ProductService implements IProductService {
     public ProductDto findByNameAndPublishDate(String name, Integer publishDate) {
         return productRepository.findByNameAndPublishDate(name, publishDate).map(productMapper::toDTO).orElse(null);
     }
+
+    @Override
+    public int updateStockAndSold(Long id, int sellQuantity) {
+        ProductEntity currentProduct = productRepository.findById(id).orElse(null);
+        if (currentProduct != null) {
+            int stock = currentProduct.getStock();
+            int sold = currentProduct.getSold();
+            if (stock < 1){
+                return 0;
+            } else if (stock < sellQuantity){
+                sold += stock;
+                stock = 0;
+                currentProduct.setStock(stock);
+                currentProduct.setSold(sold);
+                productRepository.save(currentProduct);
+                return 1;
+            }
+            sold += sellQuantity;
+            stock -= sellQuantity;
+            currentProduct.setStock(stock);
+            currentProduct.setSold(sold);
+            productRepository.save(currentProduct);
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public List<ProductDto> filterProduct(String name, Long authorId, Long categoryId) {
+        Specification<ProductEntity> specification = Specification.where(ProductSpecifications.isActive());
+        if (name != null){
+            specification = specification.and(ProductSpecifications.likeName(name));
+        }
+        if (authorId != null){
+            specification = specification.and(ProductSpecifications.hasAuthor(authorId));
+        }
+        if (categoryId != null){
+            specification = specification.and(ProductSpecifications.inCategory(categoryId));
+        }
+        return productRepository.findAll(specification).stream().map(productMapper::toDTO).toList();
+    }
 }

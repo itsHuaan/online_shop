@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.online_shop.dto.ProductDto;
 import org.example.online_shop.models.ProductModel;
+import org.example.online_shop.services.IProductService;
 import org.example.online_shop.services.impl.ProductService;
 import org.example.online_shop.services.impl.UserService;
 import org.example.online_shop.utils.Const;
@@ -18,25 +19,26 @@ import java.util.List;
 @RestController
 @RequestMapping(value = Const.API_PREFIX + "/product")
 public class ProductController {
-    private final ProductService productService;
-    private final UserService userService;
+    private final IProductService productService;
 
     @Autowired
-    public ProductController(ProductService productService, UserService userService) {
+    public ProductController(IProductService productService) {
         this.productService = productService;
-        this.userService = userService;
     }
 
     @Operation(summary = "Get Products", tags = {"06. Product"})
     @GetMapping("/get-product")
-    public ResponseEntity<?> getProduct(@RequestParam(required = false) Long productId) {
+    public ResponseEntity<?> getProduct(@RequestParam(required = false) Long productId,
+                                        @RequestParam(required = false) String name,
+                                        @RequestParam(required = false) Long authorId,
+                                        @RequestParam(required = false) Long categoryId) {
         if (productId != null) {
             ProductDto result = productService.findById(productId);
             return result != null
                     ? new ResponseEntity<>(result, HttpStatus.OK)
                     : new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            List<ProductDto> result = productService.findAll();
+            List<ProductDto> result = productService.filterProduct(name, authorId, categoryId);
             return result != null && !result.isEmpty()
                     ? new ResponseEntity<>(result, HttpStatus.OK)
                     : new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -72,8 +74,17 @@ public class ProductController {
     @Operation(summary = "Delete Products", tags = {"06. Product"})
     @DeleteMapping("/delete-product")
     public ResponseEntity<?> deleteProduct(@RequestParam Long id) {
-        return userService.delete(id) != 0
+        return productService.delete(id) != 0
                 ? new ResponseEntity<>("Product deleted", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to delete product", HttpStatus.BAD_REQUEST);
+    }
+
+
+    @Operation(summary = "Sell Products", tags = {"06. Product"})
+    @GetMapping("sell-product")
+    public ResponseEntity<?> sellProduct(@RequestParam Long productId, @RequestParam int quantity) {
+        return productService.updateStockAndSold(productId, quantity) != 0
+                ? new ResponseEntity<>("Sold " + quantity + " items", HttpStatus.OK)
+                : new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
     }
 }
