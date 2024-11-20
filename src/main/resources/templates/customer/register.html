@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{../../customer/css/register.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>MƠ</title>
+</head>
+<body>
+<section class="bg1">
+    <div style="height:100vh;"></div>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <div class="login">
+        <h2>Đăng ký</h2>
+        <form action="" method="">
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                    <div class="inputBox">
+                        <input id="name" type="text" placeholder="Họ tên" required>
+                    </div>
+                    <div class="inputBox">
+                        <input id="username" type="text" placeholder="Tên đăng nhập" required>
+                    </div>
+                    <div class="inputBox">
+                        <input id="email" type="email" placeholder="Email" required>
+                    </div>
+                </div>
+                <div>
+                    <div  id="pass" class="inputBox">
+                        <input id="password" type="password" placeholder="Mật khẩu" required>
+                        <i class="fa-solid fa-eye" id="togglePassword"></i>
+                    </div>
+                    <div class="inputBox">
+                        <input id="phone" type="text" placeholder="Số điện thoại" required>
+                    </div>
+                    <div class="inputBox">
+                        <input id="address" type="text" placeholder="Địa chỉ" required>
+                    </div>
+                </div>
+            </div>
+            <div id="otp" class="inputBox" style="display: flex; gap: 5px" >
+                <input id="code" type="text" placeholder="Mã xác nhận" required>
+                <a id="get-code" href="#">Lấy mã</a>
+            </div>
+            <div class="inputBox">
+                <input type="button"  value="Đăng ký" id="btn">
+            </div>
+            <div class="group">
+                <a href="login.html">Quay lại</a>
+                <a href="banner.html">Về trang chủ</a>
+            </div>
+        </form>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        togglePassword.classList.toggle('fa-eye');
+        togglePassword.classList.toggle('fa-eye-slash');
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#get-code').click(function(e) {
+            e.preventDefault();
+            let email = $('#email').val();
+            if (!email) {
+                alert("Vui lòng nhập email");
+                return;
+            }
+            console.log(email);
+
+            async function sendMail(email) {
+                const url = `/send-mail?email=${email}`;
+                try {
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    console.log('Mail sent successfully:', response);
+                } catch (error) {
+                    console.error('Có lỗi xảy ra trong quá trình lấy dữ liệu:', error);
+                }
+            }
+            sendMail(email);
+            let countdown = 180;
+            let interval = setInterval(function() {
+                $('#get-code').text(countdown + ' giây');
+                $('#get-code').css({
+                    width: '100px',
+                    'pointer-events': 'none',
+                    textAlign: 'center'
+                });
+                countdown--;
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    $('#get-code').text('Lấy mã');
+                    $('#get-code').css({
+                        'background-color': 'white',
+                        'pointer-events': 'auto',
+                        width: '',
+                    });
+                }
+            }, 1000);
+        });
+    });
+</script>
+</body>
+</html>

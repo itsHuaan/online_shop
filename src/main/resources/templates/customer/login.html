@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{../../customer/css/login.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Login</title>
+</head>
+<body>
+<section class="bg1">
+    <div style="height:100vh;"></div>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <span class="bg2"></span>
+    <div class="login">
+        <h2>Đăng nhập</h2>
+        <a href="banner.html" style="color: #ffffff"><i class="fa-solid fa-house"></i></a>
+        <form action="" method="">
+            <div class="inputBox">
+                <input id="username" type="text" placeholder="Tên đăng nhập" required>
+            </div>
+            <div id="pass" class="inputBox">
+                <input id="password" type="password" placeholder="Mật khẩu" required>
+                <i class="fa-solid fa-eye" id="togglePassword"></i>
+            </div>
+            <div class="inputBox">
+                <input type="submit"  value="Đăng nhập" id="btn">
+            </div>
+            <div class="group">
+                <a href="#">Quên mật khẩu</a>
+                <a href="register.html">Đăng ký</a>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        togglePassword.classList.toggle('fa-eye');
+        togglePassword.classList.toggle('fa-eye-slash');
+    });
+</script>
+</body>
+</html>

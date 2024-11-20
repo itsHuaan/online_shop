@@ -21,6 +21,7 @@ public class CategoryMapper implements IBaseMapper <CategoryDto, CategoryModel, 
     @Override
     public CategoryEntity toEntity(CategoryModel model) {
         return CategoryEntity.builder()
+                .categoryId(model.getCategoryId())
                 .name(model.getName())
                 .description(model.getDescription())
                 .status(model.getStatus())

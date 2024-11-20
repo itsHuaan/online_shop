@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #e3f2fd;
+}
+.layer{
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #111;
+    z-index: 10;
+}
+
+.paper-plane{
+    position: relative;
+    height: 20vw;
+    left: -30.5vw;
+    top: 30%;
+}
+ .layer h2{
+     text-align: center;
+     font-size: 15vw;
+     margin-top: -8%;
+     font-weight: 800;
+ }
+.header{
+    display: flex;
+    height: 10vh;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    position: fixed ;
+    top: 0;
+    z-index: 3;
+    transition: transform 0.3s ease;
+}
+.header.hide {
+    transform: translateY(-100%);
+}
+.header a{
+    font-family: "Edu AU VIC WA NT Guides", cursive;
+    text-decoration:  none;
+    color: #000000;
+}
+.header a h1{
+    font-family: "Playwrite GB S", cursive;
+    font-weight: bold;
+}
+.banner{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.banner img{
+    width: 100%;
+    object-fit: cover;
+    overflow-x: hidden;
+}
+section{
+     height: 200vh;
+     background: url(https://live.staticflickr.com/7588/17026053838_e3ac4df6e3_b.jpg);
+     background-size: cover;
+     background-attachment: fixed;
+ }
+.content{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+.content section.sec2{
+    height: 100vh;
+    background: url(../img/h8.jpg);
+    background-size: contain ;
+    background-attachment: fixed;
+    width: 50%;
+}
+.content .content-text{
+    height: 100vh;
+    width: 50%;
+    background-color: #e3f2fd;
+}
+.content .content-text p{
+    padding-top: 6vh;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.4vw;
+    line-height: 1.5;
+    font-family: "Playwrite GB S", cursive;
+}
+ .text {
+     height: 30vh;
+     display: flex;
+     text-align: center;
+     justify-content: center;
+     align-items: center;
+     background: #e3f2fd;
+ }
+
+.text h2 {
+    font-size: 7vw;
+    font-weight: 900;
+    font-family: "Playwrite GB S", cursive;
+    color: #ffffff;
+    text-align: center;
+    text-shadow:
+            0 0 5px rgba(255, 204, 0, 0.7),
+            0 0 10px rgba(255, 204, 0, 0.9),
+            0 0 15px rgba(255, 204, 0, 1),
+            0 0 25px rgba(255, 128, 0, 0.7),
+            0 0 35px rgba(255, 128, 0, 0.8),
+            0 0 50px rgba(255, 128, 0, 1),
+            0 0 60px rgba(255, 102, 102, 0.5);
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+.slide-img{
+    background-color: #e3f2fd;
+    padding-top: 10vh;
+    width: 100%;
+    overflow: hidden;
+}
+.col-md-3 {
+    padding: 0;
+    overflow: hidden;
+    width:100%
+}
+.slide-img .col-md-3 img{
+    width: 100%;
+    overflow: hidden;
+}
+
+.slide-img .slogan{
+    /*background: linear-gradient(135deg, #FF7E5F, #feb47b, #FFD700, #FF69B4, #9370DB);*/
+    background: white;
+}
+.slide-img .slogan p{
+    margin: 5vh 5vw 0 5vw;
+    /*font-family: "Playwrite GB S", cursive;*/
+    font-size: 1.2vw;
+    font-family: "Edu AU VIC WA NT Guides", cursive;
+    line-height: 2;
+
+}
+
+footer {
+    padding: 5vh 0;
+    text-align: center;
+    background-color: #e3f2fd;
+}
+
+footer .icon {
+    margin-left: 40%;
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+}
+footer h4{
+    font-size: 1vw;
+    color: #bdc3c7;
+    font-family: "Playwrite GB S", cursive;
+}
+
+
+
+
