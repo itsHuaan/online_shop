@@ -26,7 +26,7 @@ public class UserDetailsImpl implements UserDetails {
         return roles;
     }
 
-    public UserEntity getEmployee(){
+    public UserEntity getUser(){
         return this.userEntity;
     }
 

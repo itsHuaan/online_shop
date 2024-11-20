@@ -7,7 +7,9 @@ import org.example.online_shop.mappers.impl.UserMapper;
 import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IUserRepository;
 import org.example.online_shop.services.IUserService;
+import org.example.online_shop.utils.specifications.UserSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,7 +35,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(userMapper::toDTO).toList();
+        return userRepository.findAll(Specification.where(UserSpecifications.isActive())).stream().map(userMapper::toDTO).toList();
     }
 
     @Override
@@ -46,7 +48,7 @@ public class UserService implements IUserService, UserDetailsService {
         UserEntity currentUser = model.getUserId() != null
                 ? userRepository.findById(model.getUserId()).orElse(null)
                 : null;
-        if (currentUser != null && currentUser.getPassword() == null) {
+        if (currentUser != null) {
             userRepository.save(mapNonNullFieldsToEntity(model, currentUser));
             return 2;
         } else {
@@ -58,8 +60,10 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public int delete(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
+        UserEntity currentUser = userRepository.findById(id).orElse(null);
+        if (currentUser != null) {
+            currentUser.setStatus(false);
+            userRepository.save(currentUser);
             return 1;
         }
         return 0;

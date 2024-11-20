@@ -11,7 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,10 +55,6 @@ public class SecurityConfig {
                                 .requestMatchers(new AntPathRequestMatcher("/public/**"),
                                         new AntPathRequestMatcher("/error"),
                                         new AntPathRequestMatcher("/login"),
-                                        new AntPathRequestMatcher("/css/**"),
-                                        new AntPathRequestMatcher("/images/**"),
-                                        new AntPathRequestMatcher("/js/**"),
-                                        new AntPathRequestMatcher("/vendors/**"),
                                         new AntPathRequestMatcher("/**"))
                                 .permitAll()
                                 .anyRequest()
@@ -69,5 +67,10 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
+    }
+
+    @Bean
+    WebSecurityCustomizer customizer() {
+        return (web) -> web.ignoring().requestMatchers("/admin/**", "/user/**");
     }
 }

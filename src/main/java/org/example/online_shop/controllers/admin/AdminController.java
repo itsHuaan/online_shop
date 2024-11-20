@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
     @GetMapping
-    public String homePage(Model model) {
+    public String welcome(Model model) {
         return "admin/welcome";
+    }
+
+    @GetMapping("/homepage")
+    public String homepage(Model model) {
+        model.addAttribute("currentPage", "/homepage");
+        return "admin/homepage";
     }
 }
