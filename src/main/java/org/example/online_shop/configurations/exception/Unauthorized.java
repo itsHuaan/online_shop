@@ -39,5 +39,10 @@ public class Unauthorized implements AuthenticationEntryPoint {
         body.put("path", request.getRequestURI());
         final ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
+        if (request.getRequestURI().contains("/admin/log-in")) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        } else {
+            response.sendRedirect("/admin/log-in");
+        }
     }
 }

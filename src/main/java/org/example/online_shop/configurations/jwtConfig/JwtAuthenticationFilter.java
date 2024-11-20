@@ -47,6 +47,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 }
+            } else {
+                if (!request.getRequestURI().contains("/admin/log-in")) {
+                    response.sendRedirect("/admin/log-in");
+                    return;
+                }
             }
         }
         catch (Exception e){
