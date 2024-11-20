@@ -25,15 +25,27 @@ public class JwtProvider {
         this.userService = userService;
     }
 
-    public String generateTokenByUsername(String Username) {
+    public String generateTokenByUsername(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
-        UserDto userDto = userService.findByUsername(Username);
+        UserDto userDto = userService.findByUsername(username);
         return Jwts.builder()
                 .setSubject(Long.toString(userDto.getUserId()))
                 .claim("email", userDto.getEmail())
                 .claim("username", userDto.getUsername())
                 .claim("role", userDto.getRoleId())
+                .setExpiration(expiryDate)
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+                .compact();
+    }
+
+    public String generateForgetPasswordToken(String email, String username) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("email", email)
                 .setExpiration(expiryDate)
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)

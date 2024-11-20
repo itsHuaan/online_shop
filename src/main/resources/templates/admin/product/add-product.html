@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{admin/components/head :: head('Add New Books')}"></head>
+
+<body>
+<script src="/admin/static/js/initTheme.js"></script>
+<div id="app">
+    <div th:insert="~{admin/components/sidebar.html}"></div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>Add new book</h3>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Book Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Add new book</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- // Basic multiple Column Form section start -->
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form class="form" data-parsley-validate>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-name" class="form-label">Name</label>
+                                                    <input
+                                                            type="text"
+                                                            id="book-name"
+                                                            class="form-control"
+                                                            placeholder="First Name"
+                                                            name="fname-column"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="last-name-column" class="form-label"
+                                                    >Last Name</label>
+                                                    <input
+                                                            type="text"
+                                                            id="last-name-column"
+                                                            class="form-control"
+                                                            placeholder="Last Name"
+                                                            name="lname-column"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="book-description" class="form-label">Last Name</label>
+                                                    <div id="book-description">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="country-floating" class="form-label"
+                                                    >Country</label
+                                                    >
+                                                    <input
+                                                            type="text"
+                                                            id="country-floating"
+                                                            class="form-control"
+                                                            name="country-floating"
+                                                            placeholder="Country"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="company-column" class="form-label"
+                                                    >Company</label
+                                                    >
+                                                    <input
+                                                            type="text"
+                                                            id="company-column"
+                                                            class="form-control"
+                                                            name="company-column"
+                                                            placeholder="Company"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="email-id-column5" class="form-label"
+                                                    >Email</label
+                                                    >
+                                                    <input
+                                                            type="email"
+                                                            id="email-id-column5"
+                                                            class="form-control"
+                                                            name="email-id-column"
+                                                            placeholder="Email"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="email-id-column4" class="form-label"
+                                                    >Email</label
+                                                    >
+                                                    <input
+                                                            type="email"
+                                                            id="email-id-column4"
+                                                            class="form-control"
+                                                            name="email-id-column"
+                                                            placeholder="Email"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="email-id-column3" class="form-label"
+                                                    >Email</label
+                                                    >
+                                                    <input
+                                                            type="email"
+                                                            id="email-id-column3"
+                                                            class="form-control"
+                                                            name="email-id-column"
+                                                            placeholder="Email"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="email-id-column2" class="form-label">Email</label>
+                                                    <input
+                                                            type="email"
+                                                            id="email-id-column2"
+                                                            class="form-control"
+                                                            name="email-id-column"
+                                                            placeholder="Email"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="book-image" class="form-label">Book Image</label>
+                                                    <input id="book-image" type="file" class="image-preview-filepond">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary me-1 mb-1">
+                                                    Submit
+                                                </button>
+                                                <button
+                                                        type="reset"
+                                                        class="btn btn-light-secondary me-1 mb-1"
+                                                >
+                                                    Reset
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- // Basic multiple Column Form section end -->
+        </div>
+
+        <div th:insert="~{admin/components/footer.html}"></div>
+    </div>
+</div>
+<th:block th:insert="~{admin/components/js-libraries :: js-libraries}"></th:block>
+</body>
+
+</html>

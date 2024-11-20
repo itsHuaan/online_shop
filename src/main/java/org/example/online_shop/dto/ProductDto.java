@@ -20,4 +20,5 @@ public class ProductDto {
     private String categoryName;
     private String authorName;
     private double discountPercentage;
+    private boolean status;
 }

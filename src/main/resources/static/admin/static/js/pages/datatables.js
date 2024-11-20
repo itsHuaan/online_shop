@@ -1,3 +1,4 @@
+// default table
 let jquery_datatable = $("#table1").DataTable({
     responsive: true
 })
@@ -16,6 +17,16 @@ let customized_datatable = $("#table2").DataTable({
     }
 })
 
+// user table
+let productTable = $("#product-table").DataTable({
+    responsive: true,
+    ordering: true,
+    order: [],
+    columnDefs: [
+        { orderable: false, targets: -1 }
+    ]
+})
+
 const setTableColor = () => {
     document.querySelectorAll('.dataTables_paginate .pagination').forEach(dt => {
         dt.classList.add('pagination-primary')
@@ -23,3 +34,4 @@ const setTableColor = () => {
 }
 setTableColor()
 jquery_datatable.on('draw', setTableColor)
+productTable.on('draw', setTableColor)
