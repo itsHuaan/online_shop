@@ -12,10 +12,20 @@ import org.example.online_shop.utils.specifications.ProductSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class ProductService implements IProductService {
@@ -44,11 +54,29 @@ public class ProductService implements IProductService {
                 ? productRepository.findById(productModel.getProductId()).orElse(null)
                 : null;
         if (currentProduct != null) {
-            productRepository.save(mapNonNullFieldsToEntity(productModel, currentProduct));
+//            productRepository.save(mapNonNullFieldsToEntity(productModel, currentProduct));
+            ProductEntity productEntity = null;
+            String imageUrl = null;
+            try {
+                productEntity = productMapper.toEntity(productModel);
+                imageUrl = uploadImage(productModel.getImageUrl());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            productEntity.setImageUrl(imageUrl);
+            productRepository.save(productEntity);
             return 2;
         } else {
-            productRepository.save(productMapper.toEntity(productModel));
-            return 1;
+            try {
+                ProductEntity productEntity = productMapper.toEntity(productModel);
+                String imageUrl = uploadImage(productModel.getImageUrl());
+                productEntity.setImageUrl(imageUrl);
+                productRepository.save(productEntity);
+                return 1;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
         }
     }
 
@@ -127,5 +155,16 @@ public class ProductService implements IProductService {
             specification = specification.and(ProductSpecifications.inCategory(categoryId));
         }
         return productRepository.findAll(specification).stream().map(productMapper::toDTO).toList();
+    }
+
+    public String uploadImage(MultipartFile file) throws IOException {
+        Path path = Paths.get("build/resources/main/static/uploads");
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
+        }
+        String uniqueFileName =  LocalDate.now() +"_"+ LocalTime.now().format(DateTimeFormatter.ofPattern("HH-mm-ss")) + "_" + file.getOriginalFilename();
+        Files.copy(file.getInputStream(), path.resolve(uniqueFileName), StandardCopyOption.REPLACE_EXISTING);
+        String imageUrl = "/uploads/" + uniqueFileName;
+        return imageUrl;
     }
 }

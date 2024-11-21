@@ -51,7 +51,6 @@ public class ProductMapper implements IBaseMapper<ProductDto, ProductModel, Prod
                 .author(author)
                 .discount(discount)
                 .importPrice(model.getImportPrice())
-                .imageUrl(model.getImageUrl())
                 .publishDate(model.getPublishDate())
                 .createdDate(model.getCreatedDate())
                 .status(model.getStatus())

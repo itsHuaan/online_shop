@@ -8,6 +8,9 @@ import org.example.online_shop.models.AuthorModel;
 import org.example.online_shop.models.CategoryModel;
 import org.example.online_shop.repositories.ICategoryRepository;
 import org.example.online_shop.services.ICategoryService;
+import org.example.online_shop.utils.specifications.CategorySpecifications;
+import org.example.online_shop.utils.specifications.UserSpecifications;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -27,7 +30,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public List<CategoryDto> findAll() {
-        return null;
+        return categoryRepository.findAll(Specification.where(CategorySpecifications.isActive())).stream().map(categoryMapper::toDTO).toList();
     }
 
     @Override
