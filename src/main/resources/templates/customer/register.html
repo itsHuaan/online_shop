@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,30 +21,31 @@
     <span class="bg2"></span>
     <span class="bg2"></span>
     <div class="login">
+    <div class="login">
         <h2>Đăng ký</h2>
-        <form action="" method="">
+        <form th:action="@{/signup}" th:object="${UserModel}" method="post">
             <div style="display: flex; justify-content: space-between">
                 <div>
                     <div class="inputBox">
-                        <input id="name" type="text" placeholder="Họ tên" required>
+                        <input th:field="*{name}" id="name" type="text" placeholder="Họ tên" required>
                     </div>
                     <div class="inputBox">
-                        <input id="username" type="text" placeholder="Tên đăng nhập" required>
+                        <input th:field="*{username}" id="username" type="text" placeholder="Tên đăng nhập" required>
                     </div>
                     <div class="inputBox">
-                        <input id="email" type="email" placeholder="Email" required>
+                        <input th:field="*{email}" id="email" type="email" placeholder="Email" required>
                     </div>
                 </div>
                 <div>
                     <div  id="pass" class="inputBox">
-                        <input id="password" type="password" placeholder="Mật khẩu" required>
+                        <input th:field="*{password}" id="password" type="password" placeholder="Mật khẩu" required>
                         <i class="fa-solid fa-eye" id="togglePassword"></i>
                     </div>
                     <div class="inputBox">
-                        <input id="phone" type="text" placeholder="Số điện thoại" required>
+                        <input th:field="*{phone}" id="phone" type="text" placeholder="Số điện thoại" required>
                     </div>
                     <div class="inputBox">
-                        <input id="address" type="text" placeholder="Địa chỉ" required>
+                        <input th:field="*{address}" id="address" type="text" placeholder="Địa chỉ" required>
                     </div>
                 </div>
             </div>
@@ -85,22 +86,22 @@
             }
             console.log(email);
 
-            async function sendMail(email) {
-                const url = `/send-mail?email=${email}`;
+            async function getotp(email) {
+                const url = `/v1/api/registration/get-otp-send-email?email=${email}`;
                 try {
                     const response = await fetch(url);
 
                     if (!response.ok) {
                         throw new Error('Network response was not ok: ' + response.statusText);
                     }
-                    console.log('Mail sent successfully:', response);
+                    console.log(otpEmailContent(response));
                 } catch (error) {
                     console.error('Có lỗi xảy ra trong quá trình lấy dữ liệu:', error);
                 }
             }
-            sendMail(email);
+            getotp(email);
             let countdown = 180;
-            let interval = setInterval(function() {
+            let interval = setInterval(function () {
                 $('#get-code').text(countdown + ' giây');
                 $('#get-code').css({
                     width: '100px',
@@ -112,7 +113,6 @@
                     clearInterval(interval);
                     $('#get-code').text('Lấy mã');
                     $('#get-code').css({
-                        'background-color': 'white',
                         'pointer-events': 'auto',
                         width: '',
                     });
