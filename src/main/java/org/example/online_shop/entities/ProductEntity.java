@@ -53,7 +53,6 @@ public class ProductEntity {
 
     private Boolean status = true;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdDate;
 }
 

@@ -7,11 +7,12 @@ import org.example.online_shop.models.ProductModel;
 import org.example.online_shop.services.IProductService;
 import org.example.online_shop.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name = "06. Product")
 @RestController
@@ -29,14 +30,22 @@ public class ProductController {
     public ResponseEntity<?> getProduct(@RequestParam(required = false) Long productId,
                                         @RequestParam(required = false) String name,
                                         @RequestParam(required = false) Long authorId,
-                                        @RequestParam(required = false) Long categoryId) {
+                                        @RequestParam(required = false) Long categoryId,
+                                        @RequestParam(required = false) Integer pageNum,
+                                        @RequestParam(required = false) Integer pageSize) {
         if (productId != null) {
             ProductDto result = productService.findById(productId);
             return result != null
                     ? new ResponseEntity<>(result, HttpStatus.OK)
                     : new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            List<ProductDto> result = productService.filterProduct(name, authorId, categoryId);
+            Pageable pageable;
+            if (pageNum != null && pageSize != null) {
+                pageable = PageRequest.of(pageNum, pageSize);
+            } else {
+                pageable = Pageable.unpaged();
+            }
+            Page<ProductDto> result = productService.filterProduct(name, authorId, categoryId, pageable);
             return result != null && !result.isEmpty()
                     ? new ResponseEntity<>(result, HttpStatus.OK)
                     : new ResponseEntity<>(HttpStatus.NO_CONTENT);

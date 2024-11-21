@@ -2,17 +2,17 @@ package org.example.online_shop.services.impl;
 
 import org.example.online_shop.dto.ProductDto;
 import org.example.online_shop.entities.ProductEntity;
-import org.example.online_shop.entities.UserEntity;
 import org.example.online_shop.mappers.impl.ProductMapper;
 import org.example.online_shop.models.ProductModel;
-import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IProductRepository;
 import org.example.online_shop.services.IProductService;
 import org.example.online_shop.utils.specifications.ProductSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -25,7 +25,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 public class ProductService implements IProductService {
@@ -143,18 +142,18 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductDto> filterProduct(String name, Long authorId, Long categoryId) {
+    public Page<ProductDto> filterProduct(String name, Long authorId, Long categoryId, Pageable pageable) {
         Specification<ProductEntity> specification = Specification.where(ProductSpecifications.isActive());
-        if (name != null){
+        if (name != null) {
             specification = specification.and(ProductSpecifications.likeName(name));
         }
-        if (authorId != null){
+        if (authorId != null) {
             specification = specification.and(ProductSpecifications.hasAuthor(authorId));
         }
-        if (categoryId != null){
+        if (categoryId != null) {
             specification = specification.and(ProductSpecifications.inCategory(categoryId));
         }
-        return productRepository.findAll(specification).stream().map(productMapper::toDTO).toList();
+        return productRepository.findAll(specification, pageable).map(productMapper::toDTO);
     }
 
     public String uploadImage(MultipartFile file) throws IOException {
