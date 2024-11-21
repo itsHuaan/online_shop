@@ -55,10 +55,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> {
                     try {
                         requests
-                                .requestMatchers("/public/**", "/error", "/login", "/admin/log-in")
+                                .requestMatchers("/public/**", "/error", "/login", "/admin/log-in", "/**")
                                 .permitAll()
-                                .requestMatchers("/admin/**")
-                                .hasRole("ADMIN")
                                 .anyRequest()
                                 .authenticated();
                     } catch (Exception e) {
