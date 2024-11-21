@@ -77,8 +77,21 @@
                         </li>
                     </ul>
                 </li>
+                <li class="sidebar-item" th:classappend="${currentPath == '/authors'} ? 'active'">
+                    <a href="./authors" class='sidebar-link'>
+                        <i class="bi bi-person-fill"></i>
+                        <span>Author Management</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" th:classappend="${currentPath == '/categories'} ? 'active'">
+                    <a href="./categories" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Category Management</span>
+                    </a>
+                </li>
                 <li class="sidebar-item has-sub"
-                    th:classappend="${currentPath == '/products' or currentPath == '/add-products'} ? 'active'">
+                    th:classappend="${currentPath == '/products'
+                    or currentPath == '/add-products'} ? 'active'">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-book-fill"></i>
                         <span>Books Management</span>
@@ -93,6 +106,12 @@
                             <a href="./products" class="submenu-link">Book list</a>
                         </li>
                     </ul>
+                </li>
+                <li class="sidebar-item" th:classappend="${currentPath == '/discounts'} ? 'active'">
+                    <a href="./discounts" class='sidebar-link'>
+                        <i class="bi bi-tags-fill"></i>
+                        <span>Promotions Management</span>
+                    </a>
                 </li>
             </ul>
         </div>

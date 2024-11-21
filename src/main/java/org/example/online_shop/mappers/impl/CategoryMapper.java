@@ -15,6 +15,8 @@ public class CategoryMapper implements IBaseMapper <CategoryDto, CategoryModel, 
                 .categoryId(entity.getCategoryId())
                 .name(entity.getName())
                 .description(entity.getDescription())
+                .createDate(entity.getCreatedDate())
+                .status(entity.getStatus())
                 .build();
     }
 
