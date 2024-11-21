@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,7 +27,7 @@ public class CartEntity {
     private Boolean status = true;
 
     @OneToMany(mappedBy = "cart")
-    private List<CartDetailEntity> cartDetails;
+    private List<CartDetailEntity> cartDetails = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdDate;

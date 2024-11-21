@@ -27,14 +27,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = Const.API_PREFIX + "/user")
 public class UserController {
-    private final AuthenticationManager authenticationManager;
-    private final JwtProvider jwtProvider;
     private final IUserService userService;
 
     @Autowired
-    public UserController(AuthenticationManager authenticationManager, JwtProvider jwtProvider, IUserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtProvider = jwtProvider;
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 
@@ -80,25 +76,5 @@ public class UserController {
         return userService.save(user) == 2
                 ? new ResponseEntity<>("User updated", HttpStatus.OK)
                 : new ResponseEntity<>("Failed to update user", HttpStatus.BAD_REQUEST);
-    }
-
-
-    @Operation(summary = "Sign Users In", tags = {"01. User"})
-    @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@RequestBody SignInRequest credentials) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        String jwt = jwtProvider.generateTokenByUsername(userDetails.getUsername());
-        return new ResponseEntity<>(new SignInResponse(
-                userDetails.getUserEntity().getUserId(),
-                "Bearer",
-                jwt,
-                userDetails.getUsername(),
-                userDetails.getUser().getEmail(),
-                userDetails.getUser().getStatus(),
-                userDetails.getRoleName()
-        ), HttpStatus.OK);
     }
 }
