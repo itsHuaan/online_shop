@@ -113,6 +113,24 @@
                         <span>Promotions Management</span>
                     </a>
                 </li>
+                <li class="sidebar-item has-sub"
+                    th:classappend="${currentPath == '/posts'
+                    or currentPath == '/add-posts'} ? 'active'">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-bookmark-fill"></i>
+                        <span>Posts Management</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item"
+                            th:classappend="${currentPath == '/add-posts'} ? 'active'">
+                            <a href="./add-posts" class="submenu-link">Create a post</a>
+                        </li>
+                        <li class="submenu-item"
+                            th:classappend="${currentPath == '/posts'} ? 'active'">
+                            <a href="./posts" class="submenu-link">Post list</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

@@ -5,141 +5,154 @@
 <body>
 <script src="/admin/static/js/initTheme.js"></script>
 <div id="app">
-  <div th:insert="~{admin/components/sidebar.html}"></div>
-  <div id="main">
+    <div th:insert="~{admin/components/sidebar.html}"></div>
+    <div id="main">
 
-    <!--<editor-fold desc="Add new category modal">-->
-    <div class="modal fade" id="addCategory" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add new category</h5>
-            <!-- Close button -->
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="author-name" class="col-form-label">Category name:</label>
-                <input type="text" class="form-control" id="author-name">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Add</button>
-          </div>
+        <!--<editor-fold desc="Add new category modal">-->
+        <div class="modal fade" id="addCategory" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add new category</h5>
+                        <!-- Close button -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/admin/add-category}" th:object="${categoryModel}" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="category-name" class="col-form-label">Category name:</label>
+                                <input th:field="*{name}" type="text" class="form-control" id="category-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="category-description" class="col-form-label">Category description:</label>
+                                <input th:field="*{description}" type="text" class="form-control" id="category-description">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!--</editor-fold>-->
+        <!--</editor-fold>-->
 
-    <header class="mb-3">
-      <a href="#" class="burger-btn d-block d-xl-none">
-        <i class="bi bi-justify fs-3"></i>
-      </a>
-    </header>
-
-    <div class="page-heading">
-      <div class="page-title">
-        <div class="row">
-          <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Category List</h3>
-          </div>
-          <div class="col-12 col-md-6 order-md-2 order-first">
-            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Category Management</li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 py-2 d-flex justify-content-end">
-            <a href="#" id="addCategoryBtn" class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#addCategory">
-              <i data-feather="plus-circle"></i>Add new
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
             </a>
-          </div>
-        </div>
-      </div>
-      <!-- Basic Tables start -->
-      <section class="section">
-        <div class="card">
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover" id="customized-table">
-                <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                  <th>Date Created</th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="category : ${categories}"
-                    th:attr="data-id=${category.categoryId}">
-                  <td>
-                    <span th:text="${category.name}"></span>
-                  <td>
-                    <span th:text="${category.description}"></span>
-                  </td>
-                  <td>
+        </header>
+
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>Category List</h3>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                        <strong th:text="${success}"></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${error}">
+                        <strong th:text="${error}"></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Category Management</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 py-2 d-flex justify-content-end">
+                        <a href="#" id="addCategoryBtn" class="btn icon icon-left btn-primary" data-bs-toggle="modal"
+                           data-bs-target="#addCategory">
+                            <i data-feather="plus-circle"></i>Add new
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Basic Tables start -->
+            <section class="section">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="customized-table">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Date Created</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="category : ${categories}"
+                                    th:attr="data-id=${category.categoryId}">
+                                    <td>
+                                        <span th:text="${category.name}"></span>
+                                    <td>
+                                        <span th:text="${category.description}"></span>
+                                    </td>
+                                    <td>
                                         <span class="badge rounded-pill"
                                               th:classappend="${category.status ? 'bg-success' : 'bg-danger'}"
                                               th:text="${category.status ? 'Active' : 'Inactive'}">
                                         </span>
-                  </td>
-                  <td>
-                    <span th:text="${category.createDate}"></span>
-                  </td>
-                  <td>
-                    <div class="btn-group mb-1">
-                      <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false">Actions
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                          <a class="dropdown-item" href="#">
-                            <i class="bi bi-search"></i>
-                            <span th:text="Details"></span>
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            <i class="bi bi-pencil-square"></i>
-                            <span th:text="Update"></span>
-                          </a>
-                          <a class="dropdown-item" href="#" style="color: red">
-                            <i class="bi bi-trash"></i>
-                            <span th:text="Delete"></span>
-                          </a>
+                                    </td>
+                                    <td>
+                                        <span th:text="${category.createDate}"></span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group mb-1">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                        id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="false">Actions
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="bi bi-search"></i>
+                                                        <span th:text="Details"></span>
+                                                    </a>
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                        <span th:text="Update"></span>
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" style="color: red">
+                                                        <i class="bi bi-trash"></i>
+                                                        <span th:text="Delete"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                      </div>
                     </div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+                </div>
+            </section>
+            <!-- Basic Tables end -->
         </div>
-      </section>
-      <!-- Basic Tables end -->
-    </div>
 
-    <div th:insert="~{admin/components/footer.html}"></div>
-  </div>
+        <div th:insert="~{admin/components/footer.html}"></div>
+    </div>
 </div>
 <th:block th:insert="~{admin/components/js-libraries :: js-libraries}"></th:block>
 <script>
-  $(document).ready(function () {
-    $('#addCategoryBtn').click(function () {
-      $('#addCategory').modal('show');
+    $(document).ready(function () {
+        $('#addCategoryBtn').click(function () {
+            $('#addCategory').modal('show');
+        });
     });
-  });
 </script>
 </body>
 
