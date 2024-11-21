@@ -1,22 +1,20 @@
-package org.example.online_shop.models;
+package org.example.online_shop.dto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostModel {
+public class PostDto {
     private Long postId;
     private String title;
+    @Size(max = 10000)
     private String content;
-    private MultipartFile imageUrl;
+    private String imageUrl;
     private Boolean status = true;
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate;
 }
-
