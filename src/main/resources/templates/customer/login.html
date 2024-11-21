@@ -22,7 +22,7 @@
     <span class="bg2"></span>
     <div class="login">
         <h2>Đăng nhập</h2>
-        <a href="banner.html" style="color: #ffffff"><i class="fa-solid fa-house"></i></a>
+        <a th:href="@{/product}" style="color: #ffffff"><i class="fa-solid fa-house"></i></a>
         <form action="" method="">
             <div class="inputBox">
                 <input id="username" type="text" placeholder="Tên đăng nhập" required>
@@ -36,7 +36,7 @@
             </div>
             <div class="group">
                 <a href="#">Quên mật khẩu</a>
-                <a href="register.html">Đăng ký</a>
+                <a th:href="@{/register}">Đăng ký</a>
             </div>
         </form>
     </div>
