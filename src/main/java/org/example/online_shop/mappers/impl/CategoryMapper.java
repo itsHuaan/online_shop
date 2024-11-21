@@ -13,7 +13,7 @@ public class CategoryMapper implements IBaseMapper <CategoryDto, CategoryModel, 
     public CategoryDto toDTO(CategoryEntity entity) {
         return CategoryDto.builder()
                 .categoryId(entity.getCategoryId())
-                .description(entity.getName())
+                .name(entity.getName())
                 .description(entity.getDescription())
                 .build();
     }

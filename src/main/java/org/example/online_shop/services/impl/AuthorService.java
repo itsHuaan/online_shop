@@ -7,6 +7,9 @@ import org.example.online_shop.mappers.impl.AuthorMapper;
 import org.example.online_shop.models.AuthorModel;
 import org.example.online_shop.repositories.IAuthorRepository;
 import org.example.online_shop.services.IAuthorService;
+import org.example.online_shop.utils.specifications.AuthorSpecifications;
+import org.example.online_shop.utils.specifications.CategorySpecifications;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -26,7 +29,7 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public List<AuthorDto> findAll() {
-        return null;
+        return authorRepository.findAll(Specification.where(AuthorSpecifications.isActive())).stream().map(authorMapper::toDTO).toList();
     }
 
     @Override
