@@ -102,4 +102,26 @@ public class AdminController {
         model.addAttribute("currentPath", "/customers");
         return "admin/user/customers";
     }
+
+    @GetMapping("/authors")
+    public String listAuthors(Model model){
+        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("currentPath", "/authors");
+        return "admin/author/authors";
+    }
+
+    @GetMapping("/categories")
+    public String listCategories(Model model){
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("currentPath", "/categories");
+        return "admin/category/categories";
+    }
+
+    @GetMapping("/discounts")
+    public String listPromotions(Model model){
+        model.addAttribute("discounts", discountService.findAll());
+        model.addAttribute("currentPath", "/discounts");
+        return "admin/discount/discounts";
+    }
+
 }
