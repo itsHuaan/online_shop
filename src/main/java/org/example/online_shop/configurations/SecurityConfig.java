@@ -55,10 +55,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> {
                     try {
                         requests
-                                .requestMatchers(new AntPathRequestMatcher("/public/**"),
-                                        new AntPathRequestMatcher("/error"),
-                                        new AntPathRequestMatcher("/login"),
-                                        new AntPathRequestMatcher("/**"))
+                                .requestMatchers("/public/**", "/error", "/login", "/admin/log-in", "/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated();
@@ -67,13 +64,11 @@ public class SecurityConfig {
                     }
                 })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint(unauthorized)
+                        .accessDeniedHandler(forbidden))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
-    }
-
-    @Bean
-    WebSecurityCustomizer customizer() {
-        return (web) -> web.ignoring().requestMatchers("/admin/**", "/user/**");
     }
 }

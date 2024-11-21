@@ -20,6 +20,7 @@ public class ProductEntity {
     private Long productId;
 
     private String name;
+    @Size(max = 10000)
     private String description;
     private double importPrice;
     private double salePrice;
