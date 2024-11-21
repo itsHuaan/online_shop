@@ -71,9 +71,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-/*    @Bean
-    WebSecurityCustomizer customizer() {
-        return (web) -> web.ignoring().requestMatchers("/admin/**", "/user/**");
-    }*/
 }

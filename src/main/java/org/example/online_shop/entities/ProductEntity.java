@@ -1,6 +1,7 @@
 package org.example.online_shop.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class ProductEntity {
     private Long productId;
 
     private String name;
+    @Size(max = 10000)
     private String description;
     private double importPrice;
     private double salePrice;
