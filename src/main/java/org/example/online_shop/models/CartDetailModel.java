@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class CartDetailModel {
-    private Long cart_id;
-    private ProductModel product;
+    private Long cartId;
+    private Long productId;
     private Integer quantity;
     private Boolean status = true;
     private LocalDateTime createdDate = LocalDateTime.now();

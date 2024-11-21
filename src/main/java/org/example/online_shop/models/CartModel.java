@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CartModel {
-    private Long user_id;
+    private Long userId;
     private double totalPrice = 0;
     private Boolean status = true;
     private LocalDateTime createdDate = LocalDateTime.now();
