@@ -9,6 +9,9 @@ import org.example.online_shop.mappers.IBaseMapper;
 import org.example.online_shop.models.ProductModel;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 @Component
 public class ProductMapper implements IBaseMapper<ProductDto, ProductModel, ProductEntity> {
     @Override
@@ -27,11 +30,12 @@ public class ProductMapper implements IBaseMapper<ProductDto, ProductModel, Prod
                 .authorName(entity.getAuthor().getName())
                 .publishDate(entity.getPublishDate())
                 .importPrice(entity.getImportPrice())
+                .imageUrl(entity.getImageUrl())
                 .build();
     }
 
     @Override
-    public ProductEntity toEntity(ProductModel model) {
+    public ProductEntity toEntity(ProductModel model) throws IOException {
         AuthorEntity author = new AuthorEntity();
         author.setAuthorId(model.getAuthorId());
         CategoryEntity category = new CategoryEntity();
@@ -50,7 +54,6 @@ public class ProductMapper implements IBaseMapper<ProductDto, ProductModel, Prod
                 .author(author)
                 .discount(discount)
                 .importPrice(model.getImportPrice())
-                .imageUrl(model.getImageUrl())
                 .publishDate(model.getPublishDate())
                 .createdDate(model.getCreatedDate())
                 .status(model.getStatus())

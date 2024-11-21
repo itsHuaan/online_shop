@@ -26,4 +26,9 @@ public class HomeController {
     public String product(Model model) {
         return "customer/product";
     }
+
+    @GetMapping("/blog")
+    public String blog(Model model) {
+        return "customer/blog";
+    }
 }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Tag(name = "03. Category")
 @RestController
 @RequestMapping(value = Const.API_PREFIX + "/category")
@@ -23,7 +25,7 @@ public class CategoryController {
 
     @Operation(summary = "Create New Category", tags = {"03. Category"})
     @PostMapping("/create-category")
-    public ResponseEntity<?> createCategory(@RequestBody CategoryModel categoryModel){
+    public ResponseEntity<?> createCategory(@RequestBody CategoryModel categoryModel) throws IOException {
         int check = iCategoryService.checkCategory(categoryModel);
         if (check == 0){
             return new ResponseEntity<>("Danh mục đã tồn tại", HttpStatus.BAD_REQUEST);
@@ -38,7 +40,7 @@ public class CategoryController {
 
     @Operation(summary = "Update Category", tags = {"03. Category"})
     @PostMapping("/update-category")
-    public ResponseEntity<?> updateCategory(@RequestBody CategoryModel categoryModel, @RequestParam("id") Long id){
+    public ResponseEntity<?> updateCategory(@RequestBody CategoryModel categoryModel, @PathVariable Long id) throws IOException {
         categoryModel.setCategoryId(id);
         int result = iCategoryService.save(categoryModel);
         if (result == 2){
@@ -49,8 +51,8 @@ public class CategoryController {
     }
 
     @Operation(summary = "Delete Category", tags = {"03. Category"})
-    @GetMapping("/delete-category")
-    public ResponseEntity<?> deleteCategory(@RequestParam("id") long id){
+    @GetMapping("/delete-category/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id){
         int result = iCategoryService.delete(id);
         if (result == 1){
             return new ResponseEntity<>("Xóa thành công", HttpStatus.OK);

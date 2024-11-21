@@ -19,6 +19,7 @@ public class ProductDto {
     private Integer publishDate;
     private String categoryName;
     private String authorName;
+    private String imageUrl;
     private double discountPercentage;
     private boolean status;
 }

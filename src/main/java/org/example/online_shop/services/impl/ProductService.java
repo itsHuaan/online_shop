@@ -7,15 +7,24 @@ import org.example.online_shop.mappers.impl.ProductMapper;
 import org.example.online_shop.models.ProductModel;
 import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IProductRepository;
+import org.example.online_shop.services.ICategoryService;
 import org.example.online_shop.services.IProductService;
 import org.example.online_shop.utils.specifications.ProductSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class ProductService implements IProductService {
@@ -39,16 +48,28 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public int save(ProductModel productModel) {
+    public int save(ProductModel productModel) throws IOException {
         ProductEntity currentProduct = productModel.getProductId() != null
                 ? productRepository.findById(productModel.getProductId()).orElse(null)
                 : null;
         if (currentProduct != null) {
-            productRepository.save(mapNonNullFieldsToEntity(productModel, currentProduct));
+//            productRepository.save(mapNonNullFieldsToEntity(productModel, currentProduct));
+            ProductEntity productEntity = productMapper.toEntity(productModel);
+            String imageUrl = uploadImage(productModel.getImageUrl());
+            productEntity.setImageUrl(imageUrl);
+            productRepository.save(productEntity);
             return 2;
         } else {
-            productRepository.save(productMapper.toEntity(productModel));
-            return 1;
+            try {
+                ProductEntity productEntity = productMapper.toEntity(productModel);
+                String imageUrl = uploadImage(productModel.getImageUrl());
+                productEntity.setImageUrl(imageUrl);
+                productRepository.save(productEntity);
+                return 1;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
         }
     }
 
@@ -86,5 +107,16 @@ public class ProductService implements IProductService {
     @Override
     public ProductDto findByNameAndPublishDate(String name, Integer publishDate) {
         return productRepository.findByNameAndPublishDate(name, publishDate).map(productMapper::toDTO).orElse(null);
+    }
+
+    public String uploadImage(MultipartFile file) throws IOException {
+        Path path = Paths.get("build/resources/main/static/uploads");
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
+        }
+        String uniqueFileName =  UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        Files.copy(file.getInputStream(), path.resolve(uniqueFileName), StandardCopyOption.REPLACE_EXISTING);
+       String imageUrl = "/uploads/" + uniqueFileName;
+        return imageUrl;
     }
 }

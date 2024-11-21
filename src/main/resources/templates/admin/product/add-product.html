@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head th:replace="~{admin/components/head :: head('Add New Books')}"></head>
 
 <body>
@@ -37,14 +38,15 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body">
-                                    <form class="form" data-parsley-validate>
+                                    <form th:action="@{/admin/create-product}" th:object="${ProductModel}"  method="post" class="form"  enctype="multipart/form-data"  data-parsley-validate>
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
-                                                    <label for="book-name" class="form-label">Name</label>
-                                                    <input
+                                                    <label for="name" class="form-label">Name</label>
+                                                    <input  th:field="*{name}"
                                                             type="text"
-                                                            id="book-name"
+                                                            id="name"
+                                                            name="name"
                                                             class="form-control"
                                                             placeholder="Book Name"
                                                             data-parsley-required="true"
@@ -53,24 +55,25 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
-                                                    <label for="book-category" class="form-label">Category</label>
-                                                    <select id="book-category" class="form-select" aria-label="Default select example" required>
+                                                    <label for="category" class="form-label">Category</label>
+                                                    <select th:field="*{categoryId}"  id="category" name="category" class="form-select" aria-label="Default select example" required>
                                                         <option value="" selected disabled>Select a category</option>
-                                                        <option value="">1</option>
+                                                        <option th:each="category: ${categories}" th:value="${category.categoryId}">
+                                                            <span th:text="${category.name}"></span>
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="book-description" class="form-label">Book Description</label>
-                                                    <div id="book-description">
-                                                    </div>
+                                                    <textarea id="book-description"  name="description" th:field="*{description}"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="book-publish" class="form-label">Year Of Publication</label>
-                                                    <input
+                                                    <input  th:field="*{publishDate}"
                                                             type="number"
                                                             id="book-publish"
                                                             class="form-control"
@@ -83,10 +86,10 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
-                                                    <label for="book-author" class="form-label">Category</label>
-                                                    <select id="book-author" class="form-select" aria-label="Default select example" required>
+                                                    <label for="book-author" class="form-label">Author</label>
+                                                    <select th:field="*{authorId}" id="book-author" class="form-select" aria-label="Default select example" required>
                                                         <option value="" selected disabled>Select Author</option>
-                                                        <option value="">1</option>
+                                                        <option th:each="author :${authors}" th:value="${author.authorId}" th:utext="${author.name}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -94,6 +97,7 @@
                                                 <div class="form-group mandatory">
                                                     <label for="book-import-price" class="form-label">Import Price</label>
                                                     <input
+                                                            th:field="*{importPrice}"
                                                             type="number"
                                                             id="book-import-price"
                                                             class="form-control"
@@ -106,7 +110,7 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="book-sale-price" class="form-label">Listed Price</label>
-                                                    <input
+                                                    <input th:field="*{salePrice}"
                                                             type="number"
                                                             id="book-sale-price"
                                                             class="form-control"
@@ -119,7 +123,7 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="book-stock" class="form-label">Stock</label>
-                                                    <input
+                                                    <input th:field="*{stock}"
                                                             type="number"
                                                             id="book-stock"
                                                             class="form-control"
@@ -132,7 +136,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="book-total-pages" class="form-label">Total Page</label>
-                                                    <input
+                                                    <input th:field="*{totalPage}"
                                                             type="number"
                                                             id="book-total-pages"
                                                             class="form-control"
@@ -145,16 +149,16 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="book-discount" class="form-label">Discount</label>
-                                                    <select id="book-discount" class="form-select" aria-label="Default select example" required>
+                                                    <select th:field="*{discountId}" id="book-discount" class="form-select" aria-label="Default select example" required>
                                                         <option value="" selected disabled>Select Promotion</option>
-                                                        <option value="">1</option>
+                                                        <option th:each="discount : ${discounts}" th:value="${discount.discountId}" th:utext="${discount.discountPercentage}"></option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="book-image" class="form-label">Book Image</label>
-                                                    <input id="book-image" type="file" class="image-preview-filepond">
+                                                    <input th:field="*{imageUrl}" id="book-image" type="file" class="image-preview-filepond">
                                                 </div>
                                             </div>
                                         </div>

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "06. Product")
@@ -46,7 +47,7 @@ public class ProductController {
 
     @Operation(summary = "Create Products", tags = {"06. Product"})
     @PostMapping("/create-product")
-    public ResponseEntity<?> createProduct(@RequestBody ProductModel product) {
+    public ResponseEntity<?> createProduct(@RequestBody ProductModel product) throws IOException {
         boolean isExisting = productService.findByNameAndPublishDate(product.getName(), product.getPublishDate()) != null;
         if (isExisting) {
             return new ResponseEntity<>("This book is existing", HttpStatus.CONFLICT);
@@ -59,7 +60,7 @@ public class ProductController {
 
     @Operation(summary = "Update Products", tags = {"06. Product"})
     @PutMapping("/update-product")
-    public ResponseEntity<?> updateProduct(@RequestParam Long id, @RequestBody ProductModel product) {
+    public ResponseEntity<?> updateProduct(@RequestParam Long id, @RequestBody ProductModel product) throws IOException {
         if (productService.findById(id) == null) {
             return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
         }
