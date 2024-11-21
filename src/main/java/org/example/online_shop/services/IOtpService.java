@@ -5,4 +5,5 @@ import org.example.online_shop.models.OtpModel;
 
 public interface IOtpService extends IBaseService<OtpDto, OtpModel, Long> {
     OtpDto findByOtpCode(String otpCode);
+    String generateOtp();
 }

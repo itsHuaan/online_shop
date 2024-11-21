@@ -46,8 +46,9 @@ public class RegistrationController {
     public ResponseEntity<?> createOtp(@RequestParam String email) {
         OtpModel otp = new OtpModel();
         otp.setEmail(email);
+        otp.setOtpCode(otpService.generateOtp());
         return otpService.save(otp) == 1
-                ? new ResponseEntity<>("OTP Generated", HttpStatus.CREATED)
+                ? new ResponseEntity<>(otp.getOtpCode(), HttpStatus.CREATED)
                 : new ResponseEntity<>("Failed To Generate OTP", HttpStatus.BAD_REQUEST);
     }
 
@@ -58,5 +59,20 @@ public class RegistrationController {
         return jwt != null
                 ? new ResponseEntity<>(jwt, HttpStatus.CREATED)
                 : new ResponseEntity<>("Failed to generate token", HttpStatus.BAD_REQUEST);
+    }
+
+
+    @Operation(summary = "get otp and send mail", tags = {"02. Registration"})
+    @GetMapping("get-otp-send-email")
+    public ResponseEntity<?> getOtpAndSendMail(@RequestParam String email){
+        OtpModel otp = new OtpModel();
+        otp.setEmail(email);
+        otp.setOtpCode(otpService.generateOtp());
+        EmailModel email1 = new EmailModel();
+        email1.setRecipient(email);
+        email1.setSubject("OTP");
+        email1.setBody(otp.getOtpCode());
+        emailService.send(email1);
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }

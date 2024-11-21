@@ -50,7 +50,6 @@ public class OtpService implements IOtpService {
     @Override
     public int save(OtpModel otpModel) {
         OtpEntity otpEntity = otpMapper.toEntity(otpModel);
-        otpEntity.setOtpCode(generateOtp());
         otpRepository.save(otpEntity);
         return 1;
     }
@@ -60,7 +59,8 @@ public class OtpService implements IOtpService {
         return 0;
     }
 
-    private String generateOtp() {
+    @Override
+    public String generateOtp() {
         SecureRandom secureRandom = new SecureRandom();
         StringBuilder otp = new StringBuilder(OTP_LENGTH);
         for (int i = 0; i < OTP_LENGTH; i++) {
