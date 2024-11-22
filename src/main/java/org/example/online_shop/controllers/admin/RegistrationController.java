@@ -6,10 +6,11 @@ import org.example.online_shop.configurations.jwtConfig.JwtProvider;
 import org.example.online_shop.models.EmailModel;
 import org.example.online_shop.models.ForgetPasswordRequest;
 import org.example.online_shop.models.OtpModel;
+import org.example.online_shop.models.SignUpUserRequest;
 import org.example.online_shop.services.IEmailService;
 import org.example.online_shop.services.IOtpService;
-import org.example.online_shop.services.impl.EmailService;
-import org.example.online_shop.services.impl.OtpService;
+import org.example.online_shop.services.IUserService;
+import org.example.online_shop.services.impl.UserService;
 import org.example.online_shop.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +24,15 @@ public class RegistrationController {
     private final IOtpService otpService;
     private final IEmailService emailService;
     private final JwtProvider jwtProvider;
+    private final UserService userService;
+
 
     @Autowired
-    public RegistrationController(IOtpService otpService, IEmailService emailService, JwtProvider jwtProvider) {
+    public RegistrationController(IOtpService otpService, IEmailService emailService, JwtProvider jwtProvider, IUserService userService) {
         this.otpService = otpService;
         this.emailService = emailService;
         this.jwtProvider = jwtProvider;
+        this.userService = userService;
     }
 
 
@@ -74,5 +78,18 @@ public class RegistrationController {
         email1.setBody(otp.getOtpCode());
         emailService.send(email1);
         return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+    @Operation(summary = "register user", tags = {"02. Registration"})
+    @PostMapping("register-user")
+    public ResponseEntity<?> registerUser(@RequestBody SignUpUserRequest signUpUserRequest){
+        int result = userService.checkCodeAndSave(signUpUserRequest);
+        if (result == 2){
+            return new ResponseEntity<String>("Mã otp không tồn tại", HttpStatus.BAD_REQUEST)l;
+        } else if (result == 1) {
+            return new ResponseEntity<String>("Đăng ký thành công", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String>("Lỗi trong quá trình đăng ký", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

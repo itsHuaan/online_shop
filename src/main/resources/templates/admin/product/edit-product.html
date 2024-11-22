@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{admin/components/head :: head('Edit Books')}"></head>
+
+<body>
+<script src="/admin/static/js/initTheme.js"></script>
+<div id="app">
+    <div th:insert="~{admin/components/sidebar.html}"></div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>Add new book</h3>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Book Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Edit book</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- // Basic multiple Column Form section start -->
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form th:action="@{/admin/create-product}" th:object="${product}"  method="post" enctype="multipart/form-data"  class="form" data-parsley-validate>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-name" class="form-label">Name</label>
+                                                    <input
+                                                            th:field="*{name}"
+                                                            type="text"
+                                                            id="book-name"
+                                                            class="form-control"
+                                                            placeholder="Book Name"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-category" class="form-label">Category</label>
+                                                    <select th:field="*{categoryId}" id="book-category" class="form-select" aria-label="Default select example" required>
+                                                        <option value="" selected disabled>Select a category</option>
+                                                        <option th:each="category : ${categories}" th:value="${category.categoryId}">
+                                                            <span th:text="${category.name}"></span>
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-description" class="form-label">Book Description</label>
+                                                    <textarea id="book-description"  name="description" th:field="*{description}"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-publish" class="form-label">Year Of Publication</label>
+                                                    <input
+                                                            th:field="*{publishDate}"
+                                                            type="number"
+                                                            id="book-publish"
+                                                            class="form-control"
+                                                            placeholder="Year of Publication"
+                                                            min="0"
+                                                            th:attr="max=${#dates.format(#dates.createNow(), 'yyyy')}"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-author" class="form-label">Category</label>
+                                                    <select th:field="*{authorId}" id="book-author" class="form-select" aria-label="Default select example" required>
+                                                        <option value="" selected disabled>Select Author</option>
+                                                        <option th:each="author : ${authors}" th:value="${author.authorId}">
+                                                            <span th:text="${author.name}"></span>
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-import-price" class="form-label">Import Price</label>
+                                                    <input
+                                                            th:field="*{importPrice}"
+                                                            type="number"
+                                                            id="book-import-price"
+                                                            class="form-control"
+                                                            placeholder="Import Price"
+                                                            min="0"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-sale-price" class="form-label">Listed Price</label>
+                                                    <input th:field="*{salePrice}"
+                                                           type="number"
+                                                           id="book-sale-price"
+                                                           class="form-control"
+                                                           placeholder="Listed price"
+                                                           min="0"
+                                                           data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-stock" class="form-label">Stock</label>
+                                                    <input th:field="*{stock}"
+                                                           type="number"
+                                                           id="book-stock"
+                                                           class="form-control"
+                                                           placeholder="Stock"
+                                                           min="0"
+                                                           data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-total-pages" class="form-label">Total Page</label>
+                                                    <input  th:field="*{totalPage}"
+                                                            type="number"
+                                                            id="book-total-pages"
+                                                            class="form-control"
+                                                            placeholder="Total Pages"
+                                                            min="0"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="book-discount" class="form-label">Discount</label>
+                                                    <select th:field="*{}" id="book-discount" class="form-select" aria-label="Default select example" required>
+                                                        <option value="" selected disabled>Select Promotion</option>
+                                                        <option th:each="promotion : ${discounts}" th:value="${promotion.discountId}">
+                                                            <span th:text="${promotion.name} + '-'+${promotion.discountPercentage}+'%'"></span>
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="book-image" class="form-label">Book Image</label>
+                                                    <input th:field="*{imageUrl}" id="book-image" type="file" class="image-preview-filepond">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary me-1 mb-1">
+                                                    Submit
+                                                </button>
+                                                <button
+                                                        type="reset"
+                                                        class="btn btn-light-secondary me-1 mb-1"
+                                                >
+                                                    Reset
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- // Basic multiple Column Form section end -->
+        </div>
+
+        <div th:insert="~{admin/components/footer.html}"></div>
+    </div>
+</div>
+<th:block th:insert="~{admin/components/js-libraries :: js-libraries}"></th:block>
+</body>
+
+</html>

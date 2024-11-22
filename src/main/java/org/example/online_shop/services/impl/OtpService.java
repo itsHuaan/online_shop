@@ -49,8 +49,15 @@ public class OtpService implements IOtpService {
 
     @Override
     public int save(OtpModel otpModel) {
-        OtpEntity otpEntity = otpMapper.toEntity(otpModel);
-        otpRepository.save(otpEntity);
+        OtpEntity currentOtp = otpRepository.findByEmail(otpModel.getEmail()).orElse(null);
+        if (currentOtp != null){
+            currentOtp.setOtpCode(otpModel.getOtpCode());
+            otpRepository.save(currentOtp);
+        } else
+        {
+            OtpEntity otpEntity = otpMapper.toEntity(otpModel);
+            otpRepository.save(otpEntity);
+        }
         return 1;
     }
 
@@ -68,6 +75,12 @@ public class OtpService implements IOtpService {
             otp.append(SALTCHARS.charAt(index));
         }
         return otp.toString();
+    }
+
+    @Override
+    public boolean isExpired(String email) {
+        OtpEntity otp = otpRepository.findByEmail(email).orElse(null);
+        return otp.getStatus();
     }
 
     public void invalidateExpiredOtps() {

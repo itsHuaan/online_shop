@@ -1,5 +1,6 @@
 package org.example.online_shop.controllers.admin;
 
+import org.example.online_shop.dto.ProductDto;
 import org.example.online_shop.dto.UserDto;
 import org.example.online_shop.models.*;
 import org.example.online_shop.services.*;
@@ -232,6 +233,16 @@ public class AdminController {
         model.addAttribute("postModel", new PostModel());
         model.addAttribute("currentPath", "/add-posts");
         return "admin/post/add-post";
+    }
+
+    @GetMapping("/edit-product/{id}")
+    public String editProduct(Model model, @PathVariable Long id){
+        ProductDto productDto = productService.findById(id);
+        model.addAttribute("product", productDto);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("discounts", discountService.findAll());
+        return "admin/product/edit-product";
     }
 
 }

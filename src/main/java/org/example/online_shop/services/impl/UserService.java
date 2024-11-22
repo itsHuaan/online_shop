@@ -2,8 +2,10 @@ package org.example.online_shop.services.impl;
 
 import org.example.online_shop.configurations.UserDetailsImpl;
 import org.example.online_shop.dto.UserDto;
+import org.example.online_shop.entities.OtpEntity;
 import org.example.online_shop.entities.UserEntity;
 import org.example.online_shop.mappers.impl.UserMapper;
+import org.example.online_shop.models.SignUpUserRequest;
 import org.example.online_shop.models.UserModel;
 import org.example.online_shop.repositories.IUserRepository;
 import org.example.online_shop.services.IUserService;
@@ -25,12 +27,14 @@ public class UserService implements IUserService, UserDetailsService {
     private final IUserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final OtpService otpService;
 
     @Autowired
-    public UserService(IUserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(IUserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, OtpService otpService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.otpService = otpService;
     }
 
     @Override
@@ -109,5 +113,25 @@ public class UserService implements IUserService, UserDetailsService {
             }
         }
         return userEntity;
+    }
+
+    public int checkCodeAndSave(SignUpUserRequest signUpUserRequest){
+        boolean check = otpService.isExpired(signUpUserRequest.getEmail());
+        if (!check){
+            return 2;
+        }
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(signUpUserRequest.getName());
+        userEntity.setUsername(signUpUserRequest.getUsername());
+        userEntity.setEmail(signUpUserRequest.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(signUpUserRequest.getPassword()));
+        userEntity.setPhone(signUpUserRequest.getPhone());
+        userEntity.setAddress(signUpUserRequest.getAddress());
+        try {
+            userRepository.save(userEntity);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
     }
 }

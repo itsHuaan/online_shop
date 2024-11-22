@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+.post {
+    margin-bottom: 10vh;
+}
+
+.post .img img{
+    width: 100%;
+    object-fit: cover;
+    overflow-x: hidden;
+    height: 60vh;
+}
+.content{
+    width: 60%;
+    margin: auto;
+    background-color: #ffffff;
+}
+
+.content .text{
+    width: 100%;
+}
+
+.header{
+    display: flex;
+    height: 10vh;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    position: fixed ;
+    top: 0;
+    z-index: 3;
+    transition: transform 0.3s ease;
+}
+.header.hide {
+    transform: translateY(-100%);
+}
+.header a{
+    font-family: "Edu AU VIC WA NT Guides", cursive;
+    text-decoration:  none;
+    color: #000000;
+}
+.header a h1{
+    font-family: "Playwrite GB S", cursive;
+    font-weight: bold;
+}
+.slide-img{
+    background-color: #e3f2fd;
+    padding-top: 10vh;
+    width: 100%;
+    overflow: hidden;
+}
+.col-md-3 {
+    padding: 0;
+    overflow: hidden;
+    width:100%
+}
+.slide-img .col-md-3 img{
+    width: 100%;
+    overflow: hidden;
+}
+
+.slide-img .slogan{
+    /*background: linear-gradient(135deg, #FF7E5F, #feb47b, #FFD700, #FF69B4, #9370DB);*/
+    background: white;
+}
+.slide-img .slogan p{
+    margin: 5vh 5vw 0 5vw;
+    /*font-family: "Playwrite GB S", cursive;*/
+    font-size: 1.2vw;
+    font-family: "Edu AU VIC WA NT Guides", cursive;
+    line-height: 2;
+
+}
+
+footer {
+    padding: 5vh 0;
+    text-align: center;
+    background-color: #e3f2fd;
+}
+
+footer .icon {
+    margin-left: 40%;
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+}
+footer h4{
+    font-size: 1vw;
+    color: #bdc3c7;
+    font-family: "Playwrite GB S", cursive;
+}

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface IOtpRepository extends JpaRepository<OtpEntity, Long>, JpaSpecificationExecutor<OtpEntity> {
     List<OtpEntity> findAllByCreatedDateBeforeAndStatusTrue(LocalDateTime createdDate);
+    Optional<OtpEntity> findByEmail(String email);
 }

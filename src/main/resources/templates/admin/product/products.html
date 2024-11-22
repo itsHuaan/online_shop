@@ -92,7 +92,7 @@
                                                         <i class="bi bi-search"></i>
                                                         <span th:text="Details"></span>
                                                     </a>
-                                                    <a class="dropdown-item" href="#">
+                                                    <a class="dropdown-item" th:href="@{/admin/edit-product/{id}(id = ${book.productId})}">
                                                         <i class="bi bi-pencil-square"></i>
                                                         <span th:text="Update"></span>
                                                     </a>

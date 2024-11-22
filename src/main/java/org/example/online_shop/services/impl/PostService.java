@@ -40,7 +40,8 @@ public class PostService implements IPostService {
 
     @Override
     public PostDto findById(Long id) {
-        return null;
+        PostDto postDto = postMapper.toDTO(postRepository.findById(id).get());
+        return postDto;
     }
 
     @Override
