@@ -4,7 +4,9 @@ import org.example.online_shop.dto.PostDto;
 import org.example.online_shop.entities.PostEntity;
 import org.example.online_shop.mappers.IBaseMapper;
 import org.example.online_shop.models.PostModel;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PostMapper implements IBaseMapper<PostDto, PostModel, PostEntity> {
 
     @Override

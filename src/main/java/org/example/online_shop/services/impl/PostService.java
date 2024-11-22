@@ -8,6 +8,7 @@ import org.example.online_shop.repositories.IPostRepository;
 import org.example.online_shop.services.IPostService;
 import org.example.online_shop.utils.specifications.PostSpecifications;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+@Service
 public class PostService implements IPostService {
     private final IPostRepository postRepository;
     private final PostMapper postMapper;

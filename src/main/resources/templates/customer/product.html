@@ -249,24 +249,28 @@
         </div>
         <div style="background-color: #e3f2fd">
             <div class="container">
-                <div class="row">
-                    <div th:each="product:${products}" : class="col-md-3 card">
-                        <div class="imgBx">
-                            <img th:src="@{${product.imageUrl}}" alt="">
-                        </div>
-                        <a href="#" style="font-size: 1.5vw" th:utext="${product.name}"></a>
-                        <p th:text="${product.salePrice}"></p>
-                        <p><span></span><i class="fa-solid fa-star" style="color: yellow"></i></p>
-                        <p th:text="${product.authorName}"></p>
-                        <p th:text="${product.publishDate}"></p>
-                        <h4>Add to card</h4>
-                        <h5 th:text="${product.name}"></h5>
-                    </div>
+                <div class="row list-product" id="list-product">
+<!--                    <div th:each="product:${products}" : class="col-md-3 card">-->
+<!--                        <div class="imgBx">-->
+<!--                            <img th:src="@{${product.imageUrl}}" alt="">-->
+<!--                        </div>-->
+<!--                        <a href="#" style="font-size: 1.5vw" th:utext="${product.name}"></a>-->
+<!--                        <p th:text="${product.salePrice}"></p>-->
+<!--                        <p><span></span><i class="fa-solid fa-star" style="color: yellow"></i></p>-->
+<!--                        <p th:text="${product.authorName}"></p>-->
+<!--                        <p th:text="${product.publishDate}"></p>-->
+<!--                        <h4>Add to card</h4>-->
+<!--                        <h5 th:text="${product.name}"></h5>-->
+<!--                    </div>-->
                 </div>
+            </div>
+            <div style="display: flex; justify-content: center" id="pagination">
+
             </div>
         </div>
         <div th:insert="~{customer/components/footer.html}"></div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
     <script>
         let lastScrollTop = 0;
         const navbar = document.getElementById('header');
@@ -296,5 +300,71 @@
 <!--            showRandomImage();-->
 <!--        });-->
 <!--    </script>-->
+<script>
+    async function loadProduct(pageNum = 0 , pageSize = 3 ) {
+        const url = `/v1/api/product/get-product?pageNum=${pageNum}&pageSize=${pageSize}`;
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            const data = await response.json();
+            console.log(data.content);
+            console.log(data.page);
+            renderProduct(data.content)
+            renderPagination(data.page.number,data.page.totalPages)
+
+        } catch (error) {
+            console.error('Có lỗi xảy ra trong quá trình lấy dữ liệu:', error);
+        }
+    }
+    function renderProduct(products) {
+        const list_product = $('#list-product');
+        list_product.empty();
+        products.forEach(product => {
+            const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.salePrice);
+            list_product.append(`
+            <div class="col-md-3 card">
+                    <div class="imgBx">
+                        <img src="${product.imageUrl}" alt="">
+                    </div>
+                    <a href="#" style="font-size: 1.5vw">${product.name}</a>
+                    <p>${formattedPrice}</p>
+                    <p><span></span><i class="fa-solid fa-star" style="color: yellow"></i></p>
+                    <p>${product.authorName}</p>
+                    <p>${product.publishDate}</p>
+                    <h4>Add to card</h4>
+                    <h5>${product.name}</h5>
+                </div>
+        `);
+        });
+    }
+
+    function renderPagination(currentPage, totalPages) {
+        const pagination = $('#pagination');
+        pagination.empty();
+
+        if (currentPage > 0) {
+            pagination.append(`<button style="font-size: 10px; padding: 1.5vh 0.8vw" onclick="loadProduct(${currentPage - 1})"><<</button>`);
+        }
+
+        for (let i = 0; i < totalPages; i++) {
+            pagination.append(`
+            <button onclick="loadProduct( ${i})"
+                    style="${i === currentPage ? 'font-weight: bold;' : ''}">
+                ${i + 1}
+            </button>
+        `);
+        }
+
+        if (currentPage < totalPages - 1) {
+            pagination.append(`<button style="font-size: 10px; padding: 1.5vh 0.8vw" onclick="loadProduct(${currentPage + 1})">>></button>`);
+        }
+    }
+    $(document).ready(function () {
+        loadProduct();
+    });
+</script>
 </body>
 </html>
