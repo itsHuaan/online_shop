@@ -2,7 +2,9 @@ package org.example.online_shop.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,5 +20,6 @@ public class InvoiceDto {
     private Integer deliveryStatus;
     private String paymentMethod;
     private Boolean status;
+    private List<InvoiceDetailDto> invoiceDetails;
     private LocalDateTime createdDate;
 }

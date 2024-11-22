@@ -6,8 +6,13 @@ import org.example.online_shop.entities.PaymentMethodEntity;
 import org.example.online_shop.entities.UserEntity;
 import org.example.online_shop.mappers.IBaseMapper;
 import org.example.online_shop.models.InvoiceModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InvoiceMapper implements IBaseMapper<InvoiceDto, InvoiceModel, InvoiceEntity> {
+    @Autowired
+    InvoiceDetailMapper detailMapper;
     @Override
     public InvoiceDto toDTO(InvoiceEntity entity) {
         return InvoiceDto.builder()
@@ -19,6 +24,9 @@ public class InvoiceMapper implements IBaseMapper<InvoiceDto, InvoiceModel, Invo
                 .paymentMethod(entity.getPaymentMethod().getType())
                 .deliveryStatus(entity.getDeliveryStatus())
                 .status(entity.getStatus())
+                .invoiceDetails(entity.getInvoiceDetails().stream()
+                        .map(detailMapper::toDTO)
+                        .toList())
                 .createdDate(entity.getCreatedDate())
                 .build();
     }
@@ -33,7 +41,6 @@ public class InvoiceMapper implements IBaseMapper<InvoiceDto, InvoiceModel, Invo
                 .invoiceId(model.getInvoiceId())
                 .user(user)
                 .deliveryAddress(model.getDeliveryAddress())
-                .totalAmount(model.getTotalAmount())
                 .note(model.getNote())
                 .paymentMethod(paymentMethod)
                 .deliveryStatus(model.getDeliveryStatus())

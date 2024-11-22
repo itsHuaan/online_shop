@@ -15,7 +15,6 @@ public class InvoiceModel {
     private Long invoiceId;
     private Long userId;
     private String deliveryAddress;
-    private double totalAmount;
     private String note;
     private Integer deliveryStatus;
     private Long paymentMethodId;

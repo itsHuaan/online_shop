@@ -2,7 +2,7 @@ package org.example.online_shop.dto;
 
 import lombok.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -10,12 +10,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class InvoiceDetailDto {
-    private Long invoiceId;
-    private Long userId;
-    private String deliveryAddress;
-    private double totalAmount;
-    private String note;
-    private Integer deliveryStatus;
-    private Long paymentMethodId;
-    private List<InvoiceDetailItemDto> invoiceDetails;
+    private Long invoiceDetailId;
+    private Long productId;
+    private String productName;
+    private double price;
+    private Integer quantity;
+    private Boolean status;
+    private LocalDateTime createdDate;
 }

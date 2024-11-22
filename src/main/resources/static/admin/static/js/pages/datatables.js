@@ -18,14 +18,29 @@ let customized_datatable = $("#table2").DataTable({
 })
 
 // user table
-let productTable = $("#customized-table").DataTable({
+let customizedTable = $("#customized-table").DataTable({
     responsive: true,
     ordering: true,
     order: [],
     columnDefs: [
-        { orderable: false, targets: -1 }
+        {
+            orderable: false,
+            targets: -1
+        },
+        {
+            targets: '_all',
+            createdCell: function(td, cellData, rowData, row, col) {
+                $(td).css({
+                    'max-width': '200px',
+                    'max-height': '50px',
+                    'white-space': 'nowrap',
+                    'overflow': 'hidden',
+                    'text-overflow': 'ellipsis'
+                });
+            }
+        }
     ]
-})
+});
 
 const setTableColor = () => {
     document.querySelectorAll('.dataTables_paginate .pagination').forEach(dt => {
@@ -34,4 +49,4 @@ const setTableColor = () => {
 }
 setTableColor()
 jquery_datatable.on('draw', setTableColor)
-productTable.on('draw', setTableColor)
+customizedTable.on('draw', setTableColor)
