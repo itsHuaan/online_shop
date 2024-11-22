@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -65,7 +68,7 @@ public class AdminController {
         if (result == 1) {
             attributes.addFlashAttribute("success", "Thêm  thành công");
         } else {
-            attributes.addFlashAttribute("error", "Thêm thất bại");
+            attributes.addFlashAttribute("error", "Failed To Add");
         }
         return "redirect:/admin/products";
     }
@@ -74,9 +77,9 @@ public class AdminController {
     public String createPost(Model model, @ModelAttribute("postModel") PostModel postModel, RedirectAttributes attributes) {
         int result = postService.save(postModel);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Thêm thành công");
+            attributes.addFlashAttribute("success", "Added Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Thêm thất bại");
+            attributes.addFlashAttribute("error", "Failed To Add");
         }
         return "redirect:/admin/posts";
     }
@@ -86,9 +89,9 @@ public class AdminController {
         int userRole = userService.findById(id).getRoleId();
         int result = userService.delete(id);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Xóa thành công");
+            attributes.addFlashAttribute("success", "Deleted Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Xóa thất bại");
+            attributes.addFlashAttribute("error", "Failed To Delete");
         }
         return userRole == 1
                 ? "redirect:/admin/admins"
@@ -99,9 +102,9 @@ public class AdminController {
     public String deletePost(Model model, RedirectAttributes attributes, @PathVariable Long id) {
         int result = postService.delete(id);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Xóa thành công");
+            attributes.addFlashAttribute("success", "Deleted Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Xóa thất bại");
+            attributes.addFlashAttribute("error", "Failed To Delete");
         }
         return "redirect:/admin/posts";
     }
@@ -111,9 +114,9 @@ public class AdminController {
         productModel.setProductId(id);
         int result = productService.save(productModel);
         if (result == 2) {
-            attributes.addFlashAttribute("success", "Cập nhật thành công");
+            attributes.addFlashAttribute("success", "Updated Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Cập nhật thất bại");
+            attributes.addFlashAttribute("error", "Failed To Update");
         }
         return "redirect:/admin/products";
     }
@@ -122,9 +125,9 @@ public class AdminController {
     public String deleteProduct(Model model, RedirectAttributes attributes, @PathVariable Long id) {
         int result = productService.delete(id);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Xóa thành công");
+            attributes.addFlashAttribute("success", "Deleted Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Xóa thất bại");
+            attributes.addFlashAttribute("error", "Failed To Delete");
         }
         return "redirect:/admin/products";
     }
@@ -155,9 +158,9 @@ public class AdminController {
         userModel.setRoleId(1);
         int result = userService.save(userModel);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Thêm thành công");
+            attributes.addFlashAttribute("success", "Added Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Thêm thất bại");
+            attributes.addFlashAttribute("error", "Failed To Add");
         }
         return "redirect:/admin/admins";
     }
@@ -174,9 +177,9 @@ public class AdminController {
     public String addAuthor(Model model, @ModelAttribute("authorModel") AuthorModel authorModel, RedirectAttributes attributes) {
         int result = authorService.save(authorModel);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Thêm thành công");
+            attributes.addFlashAttribute("success", "Added Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Thêm thất bại");
+            attributes.addFlashAttribute("error", "Failed To Add");
         }
         return "redirect:/admin/authors";
     }
@@ -185,9 +188,9 @@ public class AdminController {
     public String addCategory(Model model, @ModelAttribute("categoryModel") CategoryModel categoryModel, RedirectAttributes attributes) {
         int result = categoryService.save(categoryModel);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Thêm thành công");
+            attributes.addFlashAttribute("success", "Added Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Thêm thất bại");
+            attributes.addFlashAttribute("error", "Failed To Add");
         }
         return "redirect:/admin/categories";
     }
@@ -196,9 +199,9 @@ public class AdminController {
     public String addDiscount(Model model, @ModelAttribute("discountModel") DiscountModel discountModel, RedirectAttributes attributes) {
         int result = discountService.save(discountModel);
         if (result == 1) {
-            attributes.addFlashAttribute("success", "Thêm thành công");
+            attributes.addFlashAttribute("success", "Added Successfully");
         } else {
-            attributes.addFlashAttribute("error", "Thêm thất bại");
+            attributes.addFlashAttribute("error", "Failed To Add");
         }
         return "redirect:/admin/discounts";
     }
@@ -234,4 +237,10 @@ public class AdminController {
         return "admin/post/add-post";
     }
 
+    @GetMapping("/invoices")
+    public String listInvoice(Model model)
+    {
+        model.addAttribute("currentPath", "/invoices");
+        return "admin/invoice/invoices";
+    }
 }

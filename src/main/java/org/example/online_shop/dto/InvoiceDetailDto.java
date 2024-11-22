@@ -1,9 +1,7 @@
-package org.example.online_shop.models;
+package org.example.online_shop.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -11,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InvoiceModel {
+public class InvoiceDetailDto {
     private Long invoiceId;
     private Long userId;
     private String deliveryAddress;
@@ -19,7 +17,5 @@ public class InvoiceModel {
     private String note;
     private Integer deliveryStatus;
     private Long paymentMethodId;
-    private LocalDateTime createdDate = LocalDateTime.now();
-    private boolean status;
+    private List<InvoiceDetailItemDto> invoiceDetails;
 }
-
