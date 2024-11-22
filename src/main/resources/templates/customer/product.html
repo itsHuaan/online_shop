@@ -301,7 +301,7 @@
 <!--        });-->
 <!--    </script>-->
 <script>
-    async function loadProduct(pageNum = 0 , pageSize = 3 ) {
+    async function loadProduct(pageNum = 0 , pageSize = 9 ) {
         const url = `/v1/api/product/get-product?pageNum=${pageNum}&pageSize=${pageSize}`;
         try {
             const response = await fetch(url);
