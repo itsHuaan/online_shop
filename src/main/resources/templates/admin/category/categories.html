@@ -106,7 +106,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <span th:text="${category.createDate}"></span>
+                                        <span th:text="${#temporals.format(category.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                     </td>
                                     <td>
                                         <div class="btn-group mb-1">

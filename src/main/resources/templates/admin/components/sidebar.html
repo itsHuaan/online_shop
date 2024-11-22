@@ -57,15 +57,15 @@
                 <li class="sidebar-item has-sub"
                     th:classappend="${currentPath == '/customers'
                     or currentPath == '/admins'
-                    or currentPath == '/add-admin' } ? 'active'">
+                    or currentPath == '/add-user' } ? 'active'">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-people-fill"></i>
                         <span>User Management</span>
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item"
-                            th:classappend="${currentPath == '/add-admin'} ? 'active'">
-                            <a href="#" class="submenu-link">Add another Admin</a>
+                            th:classappend="${currentPath == '/add-user'} ? 'active'">
+                            <a href="./add-user" class="submenu-link">Add users</a>
                         </li>
                         <li class="submenu-item"
                             th:classappend="${currentPath == '/admins'} ? 'active'">

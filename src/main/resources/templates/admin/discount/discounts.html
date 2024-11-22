@@ -59,8 +59,8 @@
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">User Management</li>
-                                <li class="breadcrumb-item active" aria-current="page">Admin List</li>
+                                <li class="breadcrumb-item active" aria-current="page">Promotions Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Campaign List</li>
                             </ol>
                         </nav>
                     </div>
@@ -103,7 +103,7 @@
                                         <span th:text="${discount.expiryDate}"></span>
                                     </td>
                                     <td>
-                                        <span th:text="${discount.createDate}"></span>
+                                        <span th:text="${#temporals.format(discount.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill"

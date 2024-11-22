@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{admin/components/head :: head('Add New User')}"></head>
+
+<body>
+<script src="/admin/static/js/initTheme.js"></script>
+<div id="app">
+    <div th:insert="~{admin/components/sidebar.html}"></div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>Add new user</h3>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">User Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Add new user</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- // Basic multiple Column Form section start -->
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form th:action="@{/admin/create-user}" th:object="${userModel}"  method="post" enctype="multipart/form-data"  class="form" data-parsley-validate>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="user-name" class="form-label">Name</label>
+                                                    <input
+                                                            th:field="*{name}"
+                                                            type="text"
+                                                            id="user-name"
+                                                            class="form-control"
+                                                            placeholder="User Name"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="user-username" class="form-label">Name</label>
+                                                    <input
+                                                            th:field="*{username}"
+                                                            type="text"
+                                                            id="user-username"
+                                                            class="form-control"
+                                                            placeholder="Username"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="user-email" class="form-label">Email</label>
+                                                    <input
+                                                            th:field="*{email}"
+                                                            type="email"
+                                                            id="user-email"
+                                                            class="form-control"
+                                                            placeholder="Email"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="user-password" class="form-label">Password</label>
+                                                    <input
+                                                            th:field="*{password}"
+                                                            type="password"
+                                                            id="user-password"
+                                                            class="form-control"
+                                                            placeholder="Password"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="user-phone" class="form-label">Phone Number</label>
+                                                    <input
+                                                            th:field="*{phone}"
+                                                            type="tel"
+                                                            id="user-phone"
+                                                            class="form-control"
+                                                            placeholder="Phone Number"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="user-address" class="form-label">Address</label>
+                                                    <input
+                                                            th:field="*{address}"
+                                                            type="text"
+                                                            id="user-address"
+                                                            class="form-control"
+                                                            placeholder="Enter your address"
+                                                    />
+                                                    <ul id="suggestions" class="list-group mt-2" style="display: none;"></ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="user-role" class="form-label">Role</label>
+                                                    <select th:field="*{roleId}" id="user-role" class="form-select" aria-label="Default select example" required>
+                                                        <option value="1">Select a category</option>
+                                                        <option value="2" selected>ADMIN</option>
+                                                        <option value="3">USER</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="book-image" class="form-label">Profile Picture</label>
+                                                    <input id="book-image" type="file" class="image-preview-filepond">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary me-1 mb-1">
+                                                    Submit
+                                                </button>
+                                                <button
+                                                        type="reset"
+                                                        class="btn btn-light-secondary me-1 mb-1"
+                                                >
+                                                    Reset
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- // Basic multiple Column Form section end -->
+        </div>
+
+        <div th:insert="~{admin/components/footer.html}"></div>
+    </div>
+</div>
+<th:block th:insert="~{admin/components/js-libraries :: js-libraries}"></th:block>
+<script>
+    $(document).ready(function () {
+        const apiKey = 'ge-435e115d93649908';
+        const autocompleteUrl = 'https://api.geocode.earth/v1/autocomplete';
+
+        $('#user-address').on('input', function () {
+            const query = $(this).val();
+            if (query.length > 2) {
+                $.ajax({
+                    url: autocompleteUrl,
+                    method: 'GET',
+                    data: {
+                        text: query,
+                        'api_key': apiKey
+                    },
+                    success: function (response) {
+                        const suggestions = response.features;
+                        const suggestionList = $('#suggestions');
+                        suggestionList.empty();
+
+                        if (suggestions.length > 0) {
+                            suggestionList.show();
+                            suggestions.forEach(suggestion => {
+                                const address = suggestion.properties.label;
+                                suggestionList.append(`<li class="list-group-item">${address}</li>`);
+                            });
+
+                            // Handle click on suggestions
+                            suggestionList.find('li').on('click', function () {
+                                $('#user-address').val($(this).text());
+                                suggestionList.hide();
+                            });
+                        } else {
+                            suggestionList.hide();
+                        }
+                    },
+                    error: function (err) {
+                        console.error('Autocomplete error:', err);
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('#user-address').length) {
+                $('#suggestions').hide();
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

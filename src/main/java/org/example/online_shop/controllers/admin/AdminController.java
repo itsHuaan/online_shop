@@ -1,5 +1,6 @@
 package org.example.online_shop.controllers.admin;
 
+import org.example.online_shop.dto.UserDto;
 import org.example.online_shop.models.*;
 import org.example.online_shop.services.*;
 import org.example.online_shop.services.impl.PostService;
@@ -63,7 +64,7 @@ public class AdminController {
         int result = productService.save(productModel);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Thêm  thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Thêm thất bại");
         }
         return "redirect:/admin/products";
@@ -74,41 +75,55 @@ public class AdminController {
         int result = postService.save(postModel);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Thêm thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Thêm thất bại");
         }
         return "redirect:/admin/posts";
     }
 
+    @GetMapping("/delete-user/{id}")
+    public String deleteUser(Model model, RedirectAttributes attributes, @PathVariable Long id) {
+        int userRole = userService.findById(id).getRoleId();
+        int result = userService.delete(id);
+        if (result == 1) {
+            attributes.addFlashAttribute("success", "Xóa thành công");
+        } else {
+            attributes.addFlashAttribute("error", "Xóa thất bại");
+        }
+        return userRole == 1
+                ? "redirect:/admin/admins"
+                : "redirect:/admin/customers";
+    }
+
     @GetMapping("/delete-post/{id}")
-    public String deletePost(Model model, RedirectAttributes attributes, @PathVariable Long id){
+    public String deletePost(Model model, RedirectAttributes attributes, @PathVariable Long id) {
         int result = postService.delete(id);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Xóa thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Xóa thất bại");
         }
         return "redirect:/admin/posts";
     }
 
     @PostMapping("/update-product/{id}")
-    public String updateProduct(Model model, @ModelAttribute("ProductModel") ProductModel productModel, RedirectAttributes attributes, @PathVariable Long id)  {
+    public String updateProduct(Model model, @ModelAttribute("ProductModel") ProductModel productModel, RedirectAttributes attributes, @PathVariable Long id) {
         productModel.setProductId(id);
         int result = productService.save(productModel);
         if (result == 2) {
             attributes.addFlashAttribute("success", "Cập nhật thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Cập nhật thất bại");
         }
         return "redirect:/admin/products";
     }
 
     @GetMapping("/delete-product/{id}")
-    public String deleteProduct(Model model, RedirectAttributes attributes, @PathVariable Long id){
+    public String deleteProduct(Model model, RedirectAttributes attributes, @PathVariable Long id) {
         int result = productService.delete(id);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Xóa thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Xóa thất bại");
         }
         return "redirect:/admin/products";
@@ -128,8 +143,27 @@ public class AdminController {
         return "admin/user/customers";
     }
 
+    @GetMapping("/add-user")
+    public String addUser(Model model) {
+        model.addAttribute("userModel", new UserModel());
+        model.addAttribute("currentPath", "/add-user");
+        return "admin/user/add-user";
+    }
+
+    @PostMapping("/create-user")
+    public String addUser(Model model, @ModelAttribute("userModel") UserModel userModel, RedirectAttributes attributes) {
+        userModel.setRoleId(1);
+        int result = userService.save(userModel);
+        if (result == 1) {
+            attributes.addFlashAttribute("success", "Thêm thành công");
+        } else {
+            attributes.addFlashAttribute("error", "Thêm thất bại");
+        }
+        return "redirect:/admin/admins";
+    }
+
     @GetMapping("/authors")
-    public String listAuthors(Model model){
+    public String listAuthors(Model model) {
         model.addAttribute("authorModel", new AuthorModel());
         model.addAttribute("authors", authorService.findAll());
         model.addAttribute("currentPath", "/authors");
@@ -141,7 +175,7 @@ public class AdminController {
         int result = authorService.save(authorModel);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Thêm thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Thêm thất bại");
         }
         return "redirect:/admin/authors";
@@ -152,7 +186,7 @@ public class AdminController {
         int result = categoryService.save(categoryModel);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Thêm thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Thêm thất bại");
         }
         return "redirect:/admin/categories";
@@ -163,14 +197,14 @@ public class AdminController {
         int result = discountService.save(discountModel);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Thêm thành công");
-        }else {
+        } else {
             attributes.addFlashAttribute("error", "Thêm thất bại");
         }
         return "redirect:/admin/discounts";
     }
 
     @GetMapping("/categories")
-    public String listCategories(Model model){
+    public String listCategories(Model model) {
         model.addAttribute("categoryModel", new CategoryModel());
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("currentPath", "/categories");
@@ -178,7 +212,7 @@ public class AdminController {
     }
 
     @GetMapping("/discounts")
-    public String listPromotions(Model model){
+    public String listPromotions(Model model) {
         model.addAttribute("discountModel", new DiscountModel());
         model.addAttribute("discounts", discountService.findAll());
         model.addAttribute("currentPath", "/discounts");
@@ -187,7 +221,7 @@ public class AdminController {
 
 
     @GetMapping("/posts")
-    public String listPosts(Model model){
+    public String listPosts(Model model) {
         model.addAttribute("posts", postService.findAll());
         model.addAttribute("currentPath", "/posts");
         return "admin/post/posts";
