@@ -88,7 +88,7 @@
                                                         <i class="bi bi-pencil-square"></i>
                                                         <span th:text="Update"></span>
                                                     </a>
-                                                    <a class="dropdown-item" href="#" style="color: red">
+                                                    <a class="dropdown-item" href="#" style="color: red" onclick="return confirm('Are you sure to delete this user?');" th:href="@{/admin/delete-user/{id}(id = ${customer.userId})}">
                                                         <i class="bi bi-trash"></i>
                                                         <span th:text="Delete"></span>
                                                     </a>

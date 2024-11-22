@@ -21,3 +21,8 @@ flatpickr('.flatpickr-time-picker-24h', {
     dateFormat: "H:i",
     inline: true
 })
+flatpickr('.simple-date-picker',{
+    dateFormat: 'Y-m-d',
+    defaultDate: 'today',
+    locale: 'vi',
+})

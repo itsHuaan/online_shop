@@ -88,7 +88,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public List<UserDto> findByRoleId(Long roleId) {
-        return userRepository.findAll(Specification.where(UserSpecifications.hasRole(roleId))).stream().map(userMapper::toDTO).toList();
+        return userRepository.findAll(Specification.where(UserSpecifications.hasRole(roleId)).and(UserSpecifications.isActive())).stream().map(userMapper::toDTO).toList();
     }
 
     private UserEntity mapNonNullFieldsToEntity(UserModel userModel, UserEntity userEntity) {

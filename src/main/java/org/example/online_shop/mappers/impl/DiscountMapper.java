@@ -15,6 +15,8 @@ public class DiscountMapper implements IBaseMapper<DiscountDto, DiscountModel, D
                 .name(entity.getName())
                 .discountPercentage(entity.getDiscountPercentage())
                 .expiryDate(entity.getExpiryDate())
+                .createDate(entity.getCreatedDate())
+                .status(entity.getStatus())
                 .build();
     }
 

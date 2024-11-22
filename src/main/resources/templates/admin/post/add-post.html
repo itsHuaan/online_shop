@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{admin/components/head :: head('Create New Post')}"></head>
+
+<body>
+<script src="/admin/static/js/initTheme.js"></script>
+<div id="app">
+    <div th:insert="~{admin/components/sidebar.html}"></div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>Create new post</h3>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Post Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Create new post</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- // Basic multiple Column Form section start -->
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form th:action="@{/admin/create-post}" th:object="${postModel}"  method="post" enctype="multipart/form-data" class="form" data-parsley-validate>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="post-title" class="form-label">Post Title</label>
+                                                    <input
+                                                            th:field="*{title}"
+                                                            type="text"
+                                                            id="post-title"
+                                                            class="form-control"
+                                                            placeholder="Post Title"
+                                                            data-parsley-required="true"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group mandatory">
+                                                    <label for="post-content" class="form-label">Post Content</label>
+                                                    <textarea id="post-content" name="description" th:field="*{content}"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="post-image" class="form-label">Post Image</label>
+                                                    <input th:field="*{imageUrl}" id="post-image" type="file" class="image-preview-filepond">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary me-1 mb-1">
+                                                    Submit
+                                                </button>
+                                                <button
+                                                        type="reset"
+                                                        class="btn btn-light-secondary me-1 mb-1">
+                                                    Reset
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- // Basic multiple Column Form section end -->
+        </div>
+
+        <div th:insert="~{admin/components/footer.html}"></div>
+    </div>
+</div>
+<th:block th:insert="~{admin/components/js-libraries :: js-libraries}"></th:block>
+</body>
+
+</html>
