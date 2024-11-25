@@ -6,6 +6,8 @@ import org.example.online_shop.models.*;
 import org.example.online_shop.services.*;
 import org.example.online_shop.services.impl.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -154,6 +156,10 @@ public class AdminController {
     @PostMapping("/create-user")
     public String addUser(Model model, @ModelAttribute("userModel") UserModel userModel, RedirectAttributes attributes) {
         userModel.setRoleId(1);
+        boolean isExisting = userService.findByEmailOrUsername(userModel.getEmail(), userModel.getUsername()) != null;
+        if (isExisting) {
+            attributes.addFlashAttribute("error", "Người dùng đã tồn tại");
+        }
         int result = userService.save(userModel);
         if (result == 1) {
             attributes.addFlashAttribute("success", "Thêm thành công");
@@ -245,4 +251,10 @@ public class AdminController {
         return "admin/product/edit-product";
     }
 
+    @GetMapping("/invoices")
+    public String listInvoice(Model model)
+    {
+        model.addAttribute("currentPath", "/invoices");
+        return "admin/invoice/invoices";
+    }
 }

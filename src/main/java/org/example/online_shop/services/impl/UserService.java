@@ -3,6 +3,7 @@ package org.example.online_shop.services.impl;
 import org.example.online_shop.configurations.UserDetailsImpl;
 import org.example.online_shop.dto.UserDto;
 import org.example.online_shop.entities.OtpEntity;
+import org.example.online_shop.entities.RoleEntity;
 import org.example.online_shop.entities.UserEntity;
 import org.example.online_shop.mappers.impl.UserMapper;
 import org.example.online_shop.models.SignUpUserRequest;
@@ -115,6 +116,7 @@ public class UserService implements IUserService, UserDetailsService {
         return userEntity;
     }
 
+    @Override
     public int checkCodeAndSave(SignUpUserRequest signUpUserRequest){
         boolean check = otpService.isExpired(signUpUserRequest.getEmail());
         if (!check){
@@ -127,11 +129,10 @@ public class UserService implements IUserService, UserDetailsService {
         userEntity.setPassword(passwordEncoder.encode(signUpUserRequest.getPassword()));
         userEntity.setPhone(signUpUserRequest.getPhone());
         userEntity.setAddress(signUpUserRequest.getAddress());
-        try {
-            userRepository.save(userEntity);
-            return 1;
-        }catch (Exception e){
-            return 0;
-        }
+        RoleEntity role = new RoleEntity();
+        role.setRoleId(2);
+        userEntity.setRole(role);
+        userRepository.save(userEntity);
+        return 1;
     }
 }

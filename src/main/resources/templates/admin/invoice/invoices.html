@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
-<head th:replace="~{admin/components/head :: head('Create a post')}"></head>
+<head th:replace="~{admin/components/head :: head('Invoice Management')}"></head>
 
 <body>
 <script src="/admin/static/js/initTheme.js"></script>
@@ -12,32 +12,31 @@
                 <i class="bi bi-justify fs-3"></i>
             </a>
         </header>
-
         <div class="page-heading">
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Post List</h3>
-                    </div>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
-                        <strong th:text="${success}"></strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${error}">
-                        <strong th:text="${error}"></strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <h3>Order List</h3>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./homepage">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Post Management</li>
-                                <li class="breadcrumb-item active" aria-current="page">Post List</li>
+                                <li class="breadcrumb-item active" aria-current="page">Order Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Order List</li>
                             </ol>
                         </nav>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12 py-2 d-flex justify-content-end">
+                        <a href="#" id="excelExport" class="btn icon icon-left btn-primary">
+                            <i data-feather="upload"></i>Export to Excel</a>
+                    </div>
+                </div>
             </div>
+            <!--<tr th:each="discount : ${discounts}"
+                th:attr="data-id=${discount.discountId}">-->
             <!-- Basic Tables start -->
             <section class="section">
                 <div class="card">
@@ -46,31 +45,21 @@
                             <table class="table table-hover" id="customized-table">
                                 <thead>
                                 <tr>
-<!--                                    <th>Image</th>-->
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                    <th>Create Date</th>
+                                    <th>Test</th>
+                                    <th>Test</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="post : ${posts}"
-                                    th:attr="data-id=${post.postId}">
-<!--                                    <td style="">-->
-<!--                                        <img th:src="@{${post.imageUrl}}" alt="">-->
-<!--                                    </td>-->
+                                <tr>
                                     <td>
-                                        <span th:text="${post.title}"></span>
+                                        <span th:text="${'yyyy-MM-dd HH:mm:ss'}"></span>
                                     </td>
-
                                     <td>
                                         <span class="badge rounded-pill"
-                                              th:classappend="${post.status ? 'bg-success' : 'bg-danger'}"
-                                              th:text="${post.status ? 'Active' : 'Inactive'}">
+                                              th:classappend="${#bools.isTrue(true) ? 'bg-success' : 'bg-warning'}"
+                                              th:text="${#bools.isTrue(true) ? 'Delivered' : 'In Transit'}">
                                         </span>
-                                    </td>
-                                    <td>
-                                        <span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                     </td>
                                     <td>
                                         <div class="btn-group mb-1">
@@ -89,9 +78,7 @@
                                                         <i class="bi bi-pencil-square"></i>
                                                         <span th:text="Update"></span>
                                                     </a>
-                                                    <a class="dropdown-item" href="#" style="color: red"
-                                                       onclick="return confirm('Bạn có cắc chắn muốn xóa?');"
-                                                       th:href="@{/admin/delete-post/{id}(id = ${post.postId})}">
+                                                    <a class="dropdown-item" href="#" style="color: red">
                                                         <i class="bi bi-trash"></i>
                                                         <span th:text="Delete"></span>
                                                     </a>
@@ -113,6 +100,8 @@
     </div>
 </div>
 <th:block th:insert="~{admin/components/js-libraries :: js-libraries}"></th:block>
+<script>
+</script>
 </body>
 
 </html>

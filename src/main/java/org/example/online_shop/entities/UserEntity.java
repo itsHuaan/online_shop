@@ -30,7 +30,6 @@ public class UserEntity {
 
     private String password;
 
-    @NotNull
     private String phone;
     private String address;
     private String profilePicture;

@@ -24,7 +24,7 @@ public class RegistrationController {
     private final IOtpService otpService;
     private final IEmailService emailService;
     private final JwtProvider jwtProvider;
-    private final UserService userService;
+    private final IUserService userService;
 
 
     @Autowired
@@ -76,6 +76,7 @@ public class RegistrationController {
         email1.setRecipient(email);
         email1.setSubject("OTP");
         email1.setBody(otp.getOtpCode());
+        otpService.save(otp);
         emailService.send(email1);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
@@ -85,7 +86,7 @@ public class RegistrationController {
     public ResponseEntity<?> registerUser(@RequestBody SignUpUserRequest signUpUserRequest){
         int result = userService.checkCodeAndSave(signUpUserRequest);
         if (result == 2){
-            return new ResponseEntity<String>("Mã otp không tồn tại", HttpStatus.BAD_REQUEST)l;
+            return new ResponseEntity<String>("Mã otp không tồn tại", HttpStatus.BAD_REQUEST);
         } else if (result == 1) {
             return new ResponseEntity<String>("Đăng ký thành công", HttpStatus.OK);
         }else {

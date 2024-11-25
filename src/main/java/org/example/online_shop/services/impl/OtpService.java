@@ -29,7 +29,7 @@ public class OtpService implements IOtpService {
     public OtpService(IOtpRepository otpRepository, OtpMapper otpMapper) {
         this.otpRepository = otpRepository;
         this.otpMapper = otpMapper;
-        startOtpInvalidationTask();
+//        startOtpInvalidationTask();
     }
 
     @Override
@@ -51,10 +51,12 @@ public class OtpService implements IOtpService {
     public int save(OtpModel otpModel) {
         OtpEntity currentOtp = otpRepository.findByEmail(otpModel.getEmail()).orElse(null);
         if (currentOtp != null){
+            currentOtp.setStatus(true);
             currentOtp.setOtpCode(otpModel.getOtpCode());
             otpRepository.save(currentOtp);
-        } else
-        {
+        } else {
+
+            currentOtp.setStatus(true);
             OtpEntity otpEntity = otpMapper.toEntity(otpModel);
             otpRepository.save(otpEntity);
         }

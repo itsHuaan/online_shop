@@ -19,6 +19,14 @@
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Customer List</h3>
                     </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+                        <strong th:text="${success}"></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${error}">
+                        <strong th:text="${error}"></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">

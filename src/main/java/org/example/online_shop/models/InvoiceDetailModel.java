@@ -1,6 +1,5 @@
 package org.example.online_shop.models;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,9 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class InvoiceDetailModel {
-    private InvoiceModel invoice;
-    private ProductModel product;
-    private double price;
+    private Long invoiceId;
+    private Long productId;
     private Integer quantity;
     private Boolean status = true;
     private LocalDateTime createdDate = LocalDateTime.now();

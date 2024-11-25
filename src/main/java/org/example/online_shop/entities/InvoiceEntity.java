@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -32,7 +33,7 @@ public class InvoiceEntity {
     private PaymentMethodEntity paymentMethod;
 
     @OneToMany(mappedBy = "invoice")
-    private List<InvoiceDetailEntity> invoiceDetails;
+    private List<InvoiceDetailEntity> invoiceDetails = new ArrayList<>();
 
     private Boolean status = true;
 

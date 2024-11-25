@@ -131,7 +131,7 @@
             let address = $('#address').val();
             let code = $('#code').val();
             async function regisEmploy(name, username, email, password, phone, address, code ) {
-                const url = `/register-user`;
+                const url = `/v1/api/registration/register-user`;
                 try {
                     const response = await fetch(url, {
                         method: 'POST',

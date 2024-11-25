@@ -131,6 +131,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="sidebar-item" th:classappend="${currentPath == '/invoices'} ? 'active'">
+                    <a href="./invoices" class='sidebar-link'>
+                        <i class="bi bi-receipt-cutoff"></i>
+                        <span>Order Management</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
